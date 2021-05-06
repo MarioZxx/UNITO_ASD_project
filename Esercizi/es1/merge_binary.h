@@ -1,18 +1,18 @@
-#ifndef ORDERED_ARRAY_H
-#define ORDERED_ARRAY_H
-
-#include <stdlib.h>
-#include <stdio.h>
+#ifndef ORDER_ARRAY_H
+#define ORDER_ARRAY_H
 
 
-struct OrderedArray {
+
+struct OrderArray {
   void **array;
-  unsigned long size;
-  unsigned long array_capacity;
+  int size;
+  int array_capacity;
+  int (*precedes)(void*, void*, short, short);
 };
 
-OrderedArray *ordered_array_create();
-void ordered_array_add(OrderedArray*, void*, unsigned long);
-void *ordered_array_get(OrderedArray*, unsigned long);
+OrderArray *order_array_create(int (*precedes)(void*, void*));
+void order_array_add(OrderArray*, void*, int);
+void *order_array_get(OrderArray*, int);
+OrderArray *m_bi_sort(OrderArray *order_array, int k, short field, short ascend);
 
-#endif // ORDERED_ARRAY_H
+#endif // ORDER_ARRAY_H
