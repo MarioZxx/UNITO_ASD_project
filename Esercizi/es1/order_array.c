@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "merge_binary.h"
 #define INITIAL_CAPACITY 2
 
@@ -17,7 +15,7 @@ OrderArray *order_array_create(int (*precedes)(void*, void*, short, short)) {
   }
   order_array->size = 0;
   order_array->array_capacity = INITIAL_CAPACITY;  
-  ordered_array->precedes = precedes;
+  order_array->precedes = precedes;
   return order_array;
 }
 
@@ -27,7 +25,7 @@ void *order_array_get(OrderArray *order_array, int i) {
     exit(EXIT_FAILURE);
   }
   if (i >= order_array->size) {
-    fprintf(stderr, "order_array_get: Index %lu is out of the array bounds", i);
+    fprintf(stderr, "order_array_get: Index %d is out of the array bounds", i);
     exit(EXIT_FAILURE);
   }
   return order_array->array[i];
