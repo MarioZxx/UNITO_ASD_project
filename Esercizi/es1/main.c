@@ -5,10 +5,10 @@ typedef struct _record {
   int int_id;
   char *string_field;
   int integer_field;
-  float float_field;
+  double double_field;
 } Record;
 
-static int precedes_record(void *r1_p, void *r2_p, short field, short ascend) {  //if i want order int/float field = 2/3, for string field = 1
+static int precedes_record(void *r1_p, void *r2_p, short field, short ascend) {  //if i want order int/double field = 2/3, for string field = 1
   if (r1_p == NULL) {
     fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
     exit(EXIT_FAILURE);
@@ -25,7 +25,7 @@ static int precedes_record(void *r1_p, void *r2_p, short field, short ascend) { 
       case 0: return rec1_p->int_id < rec2_p->int_id;
       case 1: return strcmp(rec1_p->string_field, rec2_p->string_field) < 0;
       case 2: return rec1_p->integer_field < rec2_p->integer_field;
-      case 3: return rec1_p->float_field < rec2_p->float_field;
+      case 3: return rec1_p->double_field < rec2_p->double_field;
       default:  fprintf(stderr, "precedes_record: the field type is wrong");
                 exit(EXIT_FAILURE);
     }
@@ -34,7 +34,7 @@ static int precedes_record(void *r1_p, void *r2_p, short field, short ascend) { 
       case 0: return rec1_p->int_id > rec2_p->int_id;
       case 1: return strcmp(rec1_p->string_field, rec2_p->string_field) > 0;
       case 2: return rec1_p->integer_field > rec2_p->integer_field;
-      case 3: return rec1_p->float_field > rec2_p->float_field;
+      case 3: return rec1_p->double_field > rec2_p->double_field;
       default:  fprintf(stderr, "precedes_record: the field type is wrong");
                 exit(EXIT_FAILURE);
     }
@@ -63,7 +63,7 @@ static void load_array(const char *file_name, OrderArray *array) {
     char *int_id_in_read_line_p = strtok(buffer, ",");
     char *string_field_in_read_line_p = strtok(NULL, ",");
     char *integer_field_in_read_line_p = strtok(NULL, ",");
-    char *float_field_in_read_line_p = strtok(NULL, ",");
+    char *double_field_in_read_line_p = strtok(NULL, ",");
     
     record_p->int_id = atoi(int_id_in_read_line_p);
     record_p->string_field = malloc((strlen(string_field_in_read_line_p)+1) * sizeof(char));
@@ -73,7 +73,7 @@ static void load_array(const char *file_name, OrderArray *array) {
     }
     strcpy(record_p->string_field, string_field_in_read_line_p);
     record_p->integer_field = atoi(integer_field_in_read_line_p);
-    record_p->float_field = atof(float_field_in_read_line_p); //c'è problema di atof
+    record_p->double_field = atof(double_field_in_read_line_p); //c'è problema di atof
     order_array_add(array, (void*)record_p, index_of_array);
     index_of_array++;
   }
@@ -94,7 +94,7 @@ static void get_array(OrderArray *order_array) {  //creats output file in csv wi
     fwrite(",",1,1,fp);
     fprintf(fp,"%d",array_element->integer_field);
     fwrite(",",1,1,fp);
-    fprintf(fp,"%.6f",array_element->float_field);
+    fprintf(fp,"%.6f",array_element->double_field);
     fwrite("\n",1,1,fp);
   }
   fclose(fp);
@@ -127,7 +127,7 @@ int main(int argc, char const *argv[]) {
   load_array(argv[1], array);
   printf("Insert the value of k\n");
   scanf("%d",&k);
-  printf("Choose between field1 string, field2 int, field3 float [1/2/3]\n");//devo ancora applicare il controllo su inserimento
+  printf("Choose between field1 string, field2 int, field3 double [1/2/3]\n");//devo ancora applicare il controllo su inserimento
   scanf("%hd",&field);getchar();
   
   printf("Do want order in ascending order?[y/n]\n");
@@ -141,7 +141,7 @@ int main(int argc, char const *argv[]) {
   m_bi_sort(array, k, field, ascend);
   stop = clock();
   duration =  (double)(stop-start)/CLOCKS_PER_SEC;  
-  printf("The duration of the m_bi_sort is %f. \n",duration);
+  printf("\nThe duration of the m_bi_sort is %f sec. \n",duration);
   
   printf("Do you want the output file?[y/n]\n");
   res=getchar();getchar();

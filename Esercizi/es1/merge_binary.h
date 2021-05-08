@@ -14,5 +14,3 @@ OrderArray *order_array_create(int (*precedes)(void*, void*, short, short));
 void order_array_add(OrderArray*, void*, int);
 void *order_array_get(OrderArray*, int);
 void m_bi_sort(OrderArray *order_array, int k, short field, short ascend);
-
-

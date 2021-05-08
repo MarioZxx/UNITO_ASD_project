@@ -1,10 +1,11 @@
 #include "merge_binary.h"
 
+
 void merge(OrderArray *order_array, short field, short ascend, int start, int mid, int end){ //ascend = 1
   int i = start, j = mid+1, k = 0; //the three index
   void *temp[end-start+1];
   
-  while(i<=start && j<=end){
+  while(i<=mid && j<=end){
     if( order_array->precedes(order_array->array[i], order_array->array[j], field, ascend) ){
       temp[k] = order_array->array[i];
       i++;
@@ -14,7 +15,6 @@ void merge(OrderArray *order_array, short field, short ascend, int start, int mi
     }
     k++;
   }
-  
   while (i <= mid) {
     temp[k] = order_array->array[i];
     i++;
@@ -27,19 +27,17 @@ void merge(OrderArray *order_array, short field, short ascend, int start, int mi
   }
   for (k=start; k<=end; k++)
     order_array->array[k] = temp[k-start];
-    
   return;
 }
 
-void insertion_sort(OrderArray *order_array, short field, short ascend){
+void insertion_sort(OrderArray *order_array, short field, short ascend, int start, int end){
   int i, j;
   void *temp;
-  for (i=1; i < (order_array->size); i++) {
+  for (i=start+1; i <= end; i++) {
         temp = order_array->array[i]; //value supposed smaller
         j = i-1;
         
-        printf("is index i: %d\n",i);
-        while (j >= 0 && order_array->precedes(temp, order_array->array[j], field, ascend)) {
+        while (j >= start && order_array->precedes(temp, order_array->array[j], field, ascend)) {
             order_array->array[j+1] = order_array->array[j];
             j = j - 1;
         }
@@ -51,13 +49,13 @@ void insertion_sort(OrderArray *order_array, short field, short ascend){
 void merge_sort(OrderArray *order_array, int k, short field, short ascend, int start, int end){
   if(order_array->size == 1 || start>=end) return;
   int mid = (start+end)/2;
-  printf("ms start: %d, mid: %d, end: %d\n", start, mid, end);
+  //printf("ms start: %d, mid: %d, end: %d\n", start, mid, end);
   if(end-start > k){
     merge_sort(order_array, k, field, ascend, start, mid);
     merge_sort(order_array, k, field, ascend, mid+1, end);
     merge(order_array, field, ascend, start, mid, end);
   } else {
-    insertion_sort(order_array, field, ascend);
+    insertion_sort(order_array, field, ascend, start, end);
   }
 }
 
