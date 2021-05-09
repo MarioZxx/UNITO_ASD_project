@@ -85,7 +85,7 @@ static void get_array(OrderArray *order_array) {  //creats output file in csv wi
   int size = order_array->size;
   FILE *fp;
   fp = fopen("output_file.csv", "w");
-  printf("Start output...\n");
+  printf("\nStart output...\n");
   for (int i = 0; i < size; ++i) {
     Record *array_element = (Record*)order_array_get(order_array, i);
     fprintf(fp,"%d",array_element->int_id);//////////
@@ -136,7 +136,8 @@ int main(int argc, char const *argv[]) {
     ascend=1;
   }else{ 
     ascend=0;}
-    
+  
+  printf("Sorting...\n");
   start = clock();
   m_bi_sort(array, k, field, ascend);
   stop = clock();
