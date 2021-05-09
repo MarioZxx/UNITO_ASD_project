@@ -8,7 +8,7 @@ typedef struct _record {
   double double_field;
 } Record;
 
-static int precedes_record(void *r1_p, void *r2_p, short field, short ascend) {  //if i want sort int/double field = 2/3, for string field = 1
+static int precedes_record(void *r1_p, void *r2_p, short field) {  //if i want sort int/double field = 2/3, for string field = 1
   if (r1_p == NULL) {
     fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
     exit(EXIT_FAILURE);
@@ -20,24 +20,13 @@ static int precedes_record(void *r1_p, void *r2_p, short field, short ascend) { 
   Record *rec1_p = (Record*)r1_p;
   Record *rec2_p = (Record*)r2_p;
   
-  if(ascend){
-    switch(field){
-      case 0: return rec1_p->int_id < rec2_p->int_id;
-      case 1: return strcmp(rec1_p->string_field, rec2_p->string_field) < 0;
-      case 2: return rec1_p->integer_field < rec2_p->integer_field;
-      case 3: return rec1_p->double_field < rec2_p->double_field;
-      default:  fprintf(stderr, "precedes_record: the field type is wrong");
-                exit(EXIT_FAILURE);
-    }
-  } else {
-    switch(field){
-      case 0: return rec1_p->int_id > rec2_p->int_id;
-      case 1: return strcmp(rec1_p->string_field, rec2_p->string_field) > 0;
-      case 2: return rec1_p->integer_field > rec2_p->integer_field;
-      case 3: return rec1_p->double_field > rec2_p->double_field;
-      default:  fprintf(stderr, "precedes_record: the field type is wrong");
-                exit(EXIT_FAILURE);
-    }
+  switch(field){
+    case 0: return rec1_p->int_id < rec2_p->int_id;
+    case 1: return strcmp(rec1_p->string_field, rec2_p->string_field) < 0;
+    case 2: return rec1_p->integer_field < rec2_p->integer_field;
+    case 3: return rec1_p->double_field < rec2_p->double_field;
+    default:  fprintf(stderr, "precedes_record: the field type is wrong");
+              exit(EXIT_FAILURE);
   }
 }
 

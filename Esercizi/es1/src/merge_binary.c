@@ -1,20 +1,31 @@
 #include "merge_binary.h"
 
-
-void merge(SortingArray *sorting_array, short field, short ascend, int start, int mid, int end){ //ascend = 1
+/*if ascend = 1 so sort in ascend*/
+void merge(SortingArray *sorting_array, short field, short ascend, int start, int mid, int end){
   int i = start, j = mid+1, k = 0; //the three index
   //void *temp[end-start+1];
   void **temp;
   temp=(void**)malloc(sizeof(void*)*(end-start+1));
   while(i<=mid && j<=end){
-    if( sorting_array->precedes(sorting_array->array[i], sorting_array->array[j], field, ascend) ){
-      temp[k] = sorting_array->array[i];
-      i++;
+    if(ascend){
+      if( sorting_array->precedes(sorting_array->array[i], sorting_array->array[j], field) ){
+        temp[k] = sorting_array->array[i];
+        i++;
+      } else {
+        temp[k] = sorting_array->array[j];
+        j++;
+      }
+      k++;
     } else {
-      temp[k] = sorting_array->array[j];
-      j++;
+      if( !(sorting_array->precedes(sorting_array->array[i], sorting_array->array[j], field)) ){
+        temp[k] = sorting_array->array[i];
+        i++;
+      } else {
+        temp[k] = sorting_array->array[j];
+        j++;
+      }
     }
-    k++;
+    
   }
   while (i <= mid) {
     temp[k] = sorting_array->array[i];
@@ -39,10 +50,18 @@ void insertion_sort(SortingArray *sorting_array, short field, short ascend, int 
         temp = sorting_array->array[i]; //value supposed smaller
         j = i-1;
         
-        while (j >= start && sorting_array->precedes(temp, sorting_array->array[j], field, ascend)) {
-            sorting_array->array[j+1] = sorting_array->array[j];
-            j = j - 1;
+        if(ascend){
+          while (j >= start && sorting_array->precedes(temp, sorting_array->array[j], field)) {
+              sorting_array->array[j+1] = sorting_array->array[j];
+              j = j - 1;
+          }
+        } else {
+          while (j >= start && !(sorting_array->precedes(temp, sorting_array->array[j], field)) ) {
+              sorting_array->array[j+1] = sorting_array->array[j];
+              j = j - 1;
+          }
         }
+        
         sorting_array->array[j+1] = temp;
     }
 

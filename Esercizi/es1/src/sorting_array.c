@@ -2,7 +2,7 @@
 #define INITIAL_CAPACITY 2
 
 
-SortingArray *sorting_array_create(int (*precedes)(void*, void*, short, short)) {
+SortingArray *sorting_array_create(int (*precedes)(void*, void*, short)) {
   SortingArray *sorting_array = (SortingArray*)malloc(sizeof(SortingArray));
   if (sorting_array == NULL) {
     fprintf(stderr, "sorting_array_create: unable to allocate memory for the sorting array");
@@ -51,5 +51,30 @@ void sorting_array_add(SortingArray *sorting_array, void *element, int index) {
   }
   sorting_array->array[index] = element;
   sorting_array->size++;
+}
+
+void sorting_array_free_memory(SortingArray *sorting_array) {
+  if (sorting_array == NULL) {
+    fprintf(stderr, "sorting_array_free_memory: sorting_array parameter cannot be NULL");
+    exit(EXIT_FAILURE);
+  }
+  free(sorting_array->array);
+  free(sorting_array);
+}
+
+int sorting_array_is_empty(SortingArray *sorting_array) {
+  if (sorting_array == NULL) {
+    fprintf(stderr, "sorting_array_is_empty: sorting_array parameter cannot be NULL");
+    exit(EXIT_FAILURE);
+  }
+  return sorting_array->size == 0;
+}
+
+unsigned long sorting_array_size(SortingArray *sorting_array) {
+  if (sorting_array == NULL) {
+    fprintf(stderr, "sorting_array_size: sorting_array parameter cannot be NULL");
+    exit(EXIT_FAILURE);
+  }
+  return sorting_array->size;
 }
 
