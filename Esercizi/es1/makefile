@@ -1,10 +1,12 @@
-all: merge_binary
+all: bin/merge_binary
 
-merge_binary: main.o merge_binary.o order_array.o
-	gcc -o merge_bin_ins main.o merge_binary.o order_array.o
+bin/merge_binary: build/main.o build/merge_binary.o build/sorting_array.o
+	gcc -o bin/client build/main.o build/merge_binary.o build/sorting_array.o
   
-%.o: %.c
-	gcc -c $<
+build/%.o: src/%.c
+	gcc -c $< -o $@
   
 clean:
-	rm -f *.o 
+	$(RM) build/*
+	$(RM) bin/*
+	
