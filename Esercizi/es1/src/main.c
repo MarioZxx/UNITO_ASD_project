@@ -52,7 +52,7 @@ static void load_array(const char *file_name, SortingArray *array) {
     char *int_id_in_read_line_p = strtok(buffer, ",");
     char *string_field_in_read_line_p = strtok(NULL, ",");
     char *integer_field_in_read_line_p = strtok(NULL, ",");
-    char *double_field_in_read_line_p = strtok(NULL, ",");
+    char *double_field_in_read_line_p = strtok(NULL, "\n");
     
     record_p->int_id = atoi(int_id_in_read_line_p);
     record_p->string_field = malloc((strlen(string_field_in_read_line_p)+1) * sizeof(char));
@@ -66,6 +66,7 @@ static void load_array(const char *file_name, SortingArray *array) {
     sorting_array_add(array, (void*)record_p, index_of_array);
     index_of_array++;
   }
+    printf("array size: %d\n",array->size);
   fclose(fp);
   printf("\nData loaded\n\n");
 }
@@ -77,7 +78,7 @@ static void get_array(SortingArray *sorting_array) {  //creats output file in cs
   printf("\nStart output...\n");
   for (int i = 0; i < size; ++i) {
     Record *array_element = (Record*)sorting_array_get(sorting_array, i);
-    fprintf(fp,"%d",array_element->int_id);//////////
+    fprintf(fp,"%d",array_element->int_id);
     fwrite(",",1,1,fp);
     fprintf(fp,"%s",array_element->string_field);
     fwrite(",",1,1,fp);
@@ -119,13 +120,13 @@ int main(int argc, char const *argv[]) {
   printf("Choose between field1 string, field2 int, field3 double [1/2/3]\n");//devo ancora applicare il controllo su inserimento
   scanf("%hd",&field);getchar();
   
-  printf("Do want sort in ascending order?[y/n]\n");
+  printf("Do you want sort in ascending order?[y/n]\n");
   res=getchar();getchar();
   if(res=='y') {
     ascend=1;
   }else{ 
     ascend=0;}
-  
+
   printf("Sorting...\n");
   start = clock();
   m_bi_sort(array, k, field, ascend);
