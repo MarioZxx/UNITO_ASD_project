@@ -62,7 +62,7 @@ static void load_array(const char *file_name, SortingArray *array) {
     }
     strcpy(record_p->string_field, string_field_in_read_line_p);
     record_p->integer_field = atoi(integer_field_in_read_line_p);
-    record_p->double_field = atof(double_field_in_read_line_p); //c'è problema di atof
+    record_p->double_field = atof(double_field_in_read_line_p);
     sorting_array_add(array, (void*)record_p, index_of_array);
     index_of_array++;
   }

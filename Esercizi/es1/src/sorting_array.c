@@ -42,7 +42,7 @@ void sorting_array_add(SortingArray *sorting_array, void *element, int index) {
   }
 
   if (sorting_array->size >= sorting_array->array_capacity) {
-    sorting_array->array_capacity = 2 * sorting_array->array_capacity; // Why multiply by 2?
+    sorting_array->array_capacity = 2 * sorting_array->array_capacity;
     sorting_array->array = (void**)realloc(sorting_array->array, sorting_array->array_capacity * sizeof(void*));
     if (sorting_array->array == NULL) {
       fprintf(stderr,"sorting_array_add: unable to reallocate memory to host the new element");
