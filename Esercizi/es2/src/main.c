@@ -66,7 +66,7 @@ static void free_array(char **array, int size) {
 }
 
 int main(int argc, char const *argv[]) {
-  if (argc < 2) {
+  /*if (argc < 2) {
     printf("Usage: edit_distance_main <file_name>\n");
     exit(EXIT_FAILURE);
   }
@@ -77,10 +77,12 @@ int main(int argc, char const *argv[]) {
   int dictionary_size = load_dictionary("./dictionary.txt", dictionary);
   printf("\nData loaded\n\n");
   
-  
-  
   free_array(dictionary, dictionary_size);
-  free_array(correct_me, correct_me_size);
+  free_array(correct_me, correct_me_size);*/
+  int test=edit_distance("ciao","bao");
+  printf("%d\n",test);
+  //edit_distance("casa","cassa");
+  
 }
 
 
