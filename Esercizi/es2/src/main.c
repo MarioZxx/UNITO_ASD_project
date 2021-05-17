@@ -75,13 +75,26 @@ int main(int argc, char const *argv[]) {
   printf("\nLoading data from file...\n");
   int correct_me_size = load_correct_me(argv[1], correct_me);
   int dictionary_size = load_dictionary("./dictionary.txt", dictionary);
-  printf("\nData loaded\n\n");
+  printf("\nData loaded\n\n");*/
   
-  free_array(dictionary, dictionary_size);
-  free_array(correct_me, correct_me_size);*/
-  int test=edit_distance_dyn_ric("ciajkhkjbkbo","bao");
-  printf("%d\n",test);
-  //edit_distance("casa","cassa");
+  /*for(int i = 0;i<correct_me_size; i++){
+    for(int j = 0;j<dictionary_size; j++){
+      edit_distance_dyn_ric(correct_me[i], dictionary[j]);
+    }
+  }*/
+  clock_t start = clock();
+  int test1=edit_distance("universitacaonima","bracciodestro");
+  double duration = (double)(clock()-start)/CLOCKS_PER_SEC;
+  printf("1° time: %lf\n",duration);
+  
+  start = clock();
+  int test2=edit_distance_dyn_ric("universitacaonima","bracciodestro");
+  duration = (double)(clock()-start)/CLOCKS_PER_SEC;
+  printf("2° dynt: %lf\n",duration);
+  
+  //free_array(dictionary, dictionary_size);
+  //free_array(correct_me, correct_me_size);
+  printf("1: %d, 2: %d\n",test1, test2);
   
 }
 
