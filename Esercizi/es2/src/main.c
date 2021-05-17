@@ -79,7 +79,7 @@ int main(int argc, char const *argv[]) {
   
   free_array(dictionary, dictionary_size);
   free_array(correct_me, correct_me_size);*/
-  int test=edit_distance("ciao","bao");
+  int test=edit_distance_dyn_ric("ciajkhkjbkbo","bao");
   printf("%d\n",test);
   //edit_distance("casa","cassa");
   
