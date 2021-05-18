@@ -1,10 +1,12 @@
 #include "edit_distance.h"
+#define INITIAL_CAPACITY 2
 
 typedef struct _mytable{  //struct for memoization
   char **str1;
   char **str2;
   int *distance;
   int index_of_table;
+  int capacity;
 }mytable;
 
 char *rest(char *string){ //return string without first char
@@ -30,11 +32,19 @@ int edit_distance(char *string1, char *string2){  //edit_distance recursive
 //insert a couple of string in the table, using string as an index
 void insert(char *string1, char *string2, mytable *dp_table, int dp_distance){
   int index = dp_table->index_of_table;
-  dp_table->str1[index]=(char*)malloc(sizeof(char*));
-  strcpy(dp_table->str1[index], string1);
-  dp_table->str2[index]=(char*)malloc(sizeof(char*));
-  strcpy(dp_table->str2[index], string2);
-  dp_table->distance[index]=dp_distance;
+  if (index >= dp_table->capacity) {
+    dp_table->capacity = 2 * dp_table->capacity;
+    dp_table->str1 = (char**)realloc(dp_table->str1, dp_table->capacity * sizeof(char*));
+    dp_table->str2 = (char**)realloc(dp_table->str2, dp_table->capacity * sizeof(char*));
+    dp_table->distance = (int*)realloc(dp_table->distance, dp_table->capacity * sizeof(int));
+    if (dp_table->str1 == NULL || dp_table->str2 == NULL || dp_table->distance == NULL) {
+      fprintf(stderr,"edit_dyn_insert: unable to reallocate memory to host the new element");
+      exit(EXIT_FAILURE);
+    }
+  }
+  dp_table->str1[index] = string1;
+  dp_table->str2[index] = string2;
+  dp_table->distance[index] = dp_distance;
   dp_table->index_of_table++;
 }
 
@@ -71,19 +81,23 @@ int edit_distance_dyn(char *string1, char *string2, mytable *dp_table){
 
 int edit_distance_dyn_ric(char *string1, char *string2){  //wrapper
   mytable *dp_table = (mytable*)malloc(sizeof(mytable));
-  dp_table->str1 = (char**)malloc(100000*sizeof(char*));
-  dp_table->str2 = (char**)malloc(100000*sizeof(char*));
-  dp_table->distance = (int*)malloc(100000*sizeof(int));
+  if (dp_table == NULL) {
+    fprintf(stderr,"edit_distance_dyn_ric: unable to allocate memory for dp_table");
+    exit(EXIT_FAILURE);
+  }
+  dp_table->str1 = (char**)malloc(INITIAL_CAPACITY*sizeof(char*));
+  dp_table->str2 = (char**)malloc(INITIAL_CAPACITY*sizeof(char*));
+  dp_table->distance = (int*)malloc(INITIAL_CAPACITY*sizeof(int));
+  if (dp_table->str1 == NULL || dp_table->str2 == NULL || dp_table->distance == NULL) {
+      fprintf(stderr,"edit_distance_dyn_ric: unable to allocate memory for internal arrays");
+      exit(EXIT_FAILURE);
+    }
   dp_table->index_of_table = 0;
+  dp_table->capacity = INITIAL_CAPACITY;
   int result = edit_distance_dyn(string1, string2, dp_table);
   
-  for(int i = 0; i < dp_table->index_of_table; i++){
-      free(dp_table->str1[i]);
-      free(dp_table->str2[i]);
-  }
   free(dp_table->str1);
   free(dp_table->str2);
-  free(dp_table->distance);
   free(dp_table);
   return result;
 }

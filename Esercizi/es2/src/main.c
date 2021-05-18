@@ -1,6 +1,6 @@
 #include "edit_distance.h"
 #define BUFFER_SIZE 1024
-#define INITIAL_CAPACITY 1024
+#define CORRECT_CAPACITY 1024
 
 
 static int load_correct_me(const char *file_name, char **array){  //load correct_me file
@@ -25,6 +25,10 @@ static int load_correct_me(const char *file_name, char **array){  //load correct
       temp[index_word]='\0';
       if(strlen(temp)!=0){
         array[index_of_array]=(char*)malloc(sizeof(temp));
+        if (array[index_of_array] == NULL) {
+          fprintf(stderr,"main: unable to allocate memory for correct_me element");
+          exit(EXIT_FAILURE);
+        }
         strcpy(array[index_of_array],temp);
         index_of_array++;
       }
@@ -54,6 +58,10 @@ static int load_dictionary(const char *file_name, char **array){  //load diction
     
     char *word_in_line = strtok(buffer, "\n");
     array[index_of_array]=(char*)malloc(sizeof(word_in_line));
+      if (array[index_of_array] == NULL) {
+        fprintf(stderr,"main: unable to allocate memory for dictionary element");
+        exit(EXIT_FAILURE);
+      }
     strcpy(array[index_of_array], word_in_line);
     index_of_array++;
       
@@ -89,8 +97,16 @@ int main(int argc, char const *argv[]) {
     printf("Usage: edit_distance_main <file_name>\n");
     exit(EXIT_FAILURE);
   }
-  char **correct_me=(char**)malloc(INITIAL_CAPACITY*sizeof(char*));
+  char **correct_me=(char**)malloc(CORRECT_CAPACITY*sizeof(char*));
+  if (correct_me == NULL) {
+      fprintf(stderr,"main: unable to allocate memory for correct_me file");
+      exit(EXIT_FAILURE);
+    }
   char **dictionary=(char**)malloc(1000000*sizeof(char*));
+  if (dictionary == NULL) {
+      fprintf(stderr,"main: unable to allocate memory for dictionary file");
+      exit(EXIT_FAILURE);
+    }
   printf("\nLoading data from file...\n");
   int correct_me_size = load_correct_me(argv[1], correct_me);
   int dictionary_size = load_dictionary("./dictionary.txt", dictionary);
@@ -120,9 +136,9 @@ int main(int argc, char const *argv[]) {
     insert_list(correct_me[i], min_list);
   }
   double duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("edit dyn time: %lf\n",duration);
+  printf("edit dyn time: %lf sec.\n",duration);
   
-  start = clock();
+  /*start = clock();
   for(int i = 0; i < correct_me_size; i++){
     min = 100;
     list_index = 0;
@@ -143,7 +159,7 @@ int main(int argc, char const *argv[]) {
     insert_list(correct_me[i], min_list);
   }
   duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("edit time: %lf se.\n",duration);
+  printf("edit time: %lf sec.\n",duration);*/
   
   
   free_array(dictionary, dictionary_size);
