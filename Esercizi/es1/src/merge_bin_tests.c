@@ -81,12 +81,12 @@ static void test_sorting_array_add_get_three_el() {
 
 int main() {
   UNITY_BEGIN();
-  RUN_TEST(test_sorting_array_is_empty_zero_el);
   RUN_TEST(test_sorting_array_is_empty_one_el);
-  RUN_TEST(test_sorting_array_size_zero_el);
-  RUN_TEST(test_sorting_array_size_one_el);
   RUN_TEST(test_sorting_array_size_two_el);
-  RUN_TEST(test_sorting_array_add_get_one_el);
   RUN_TEST(test_sorting_array_add_get_three_el);
+  RUN_TEST(test_sorting_array_size_one_el);
+  RUN_TEST(test_sorting_array_is_empty_zero_el);
+  RUN_TEST(test_sorting_array_size_zero_el);
+  RUN_TEST(test_sorting_array_add_get_one_el);
   return UNITY_END();
 }

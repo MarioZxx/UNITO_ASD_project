@@ -8,7 +8,7 @@ static int load_correct_me(const char *file_name, char **array){  //load correct
   FILE *fp;
   fp = fopen(file_name, "r");
   if (fp == NULL) {
-    fprintf(stderr, "main: unable to open the file correct_me");
+    fprintf(stderr, "main: unable to open the file correct_me\n");
     exit(EXIT_FAILURE);
   }
   int index_of_array = 0;  
@@ -31,7 +31,11 @@ static int load_correct_me(const char *file_name, char **array){  //load correct
       if(buffer[index_line]=='\n')break;
       else index_line++;
     }
-  }  
+  }
+  if (index_of_array == 0) {
+    fprintf(stderr, "main: there is no word in the file correct_me\n");
+    exit(EXIT_FAILURE);
+  }
   fclose(fp);
   printf("there are %d words\n",index_of_array);
   return index_of_array;
@@ -42,7 +46,7 @@ static int load_dictionary(const char *file_name, char **array){  //load diction
   FILE *fp;
   fp = fopen(file_name, "r");
   if (fp == NULL) {
-    fprintf(stderr, "main: unable to open the file dictionary");
+    fprintf(stderr, "main: unable to open the file dictionary\n");
     exit(EXIT_FAILURE);
   }
   int index_of_array = 0;  
@@ -53,7 +57,11 @@ static int load_dictionary(const char *file_name, char **array){  //load diction
     strcpy(array[index_of_array], word_in_line);
     index_of_array++;
       
-  }  
+  }
+  if (index_of_array == 0) {
+    fprintf(stderr, "main: there is no word in the file correct_me\n");
+    exit(EXIT_FAILURE);
+  }
   fclose(fp);
   return index_of_array;
 }

@@ -20,7 +20,7 @@ int min_number(int first, int secnd){
 int edit_distance(char *string1, char *string2){  //edit_distance recursive
   if(strlen(string1)==0) return strlen(string2);
   if(strlen(string2)==0) return strlen(string1);
-  if(string1[0]==string2[0] || string1[0]==string2[0]-32) 
+  if(string1[0]==string2[0] || string1[0]==string2[0]-32 || string1[0]==string2[0]+32) 
     return edit_distance(rest(string1), rest(string2));
   return 1 + min_number( edit_distance(string1, rest(string2)),
                          edit_distance(rest(string1), string2)
@@ -56,7 +56,7 @@ int edit_distance_dyn(char *string1, char *string2, mytable *dp_table){
   dp_distance = check(string1,string2,dp_table);
   if(dp_distance!=-1) return dp_distance;
   
-  if(string1[0]==string2[0] || string1[0]==string2[0]-32) {
+  if(string1[0]==string2[0] || string1[0]==string2[0]-32 || string1[0]==string2[0]+32) {
     dp_distance = edit_distance_dyn(rest(string1), rest(string2), dp_table);
     insert(string1, string2, dp_table, dp_distance);
     return dp_distance;
