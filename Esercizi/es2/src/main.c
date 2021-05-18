@@ -3,7 +3,7 @@
 #define INITIAL_CAPACITY 1024
 
 
-static int load_correct_me(const char *file_name, char **array) {
+static int load_correct_me(const char *file_name, char **array){  //load correct_me file
   char buffer[BUFFER_SIZE];  
   FILE *fp;
   fp = fopen(file_name, "r");
@@ -33,11 +33,11 @@ static int load_correct_me(const char *file_name, char **array) {
     }
   }  
   fclose(fp);
-  printf("there is %d words\n",index_of_array);
+  printf("there are %d words\n",index_of_array);
   return index_of_array;
 }
 
-static int load_dictionary(const char *file_name, char **array) {
+static int load_dictionary(const char *file_name, char **array){  //load dictionary file
   char buffer[BUFFER_SIZE];  
   FILE *fp;
   fp = fopen(file_name, "r");
@@ -65,8 +65,19 @@ static void free_array(char **array, int size) {
   free(array);
 }
 
+static void insert_list(char *string, char **list) {  //creats output file in csv with array ordered
+  FILE *fp;
+  fp = fopen("list_of_all_words.csv", "a");
+  fprintf(fp,"%s : ",string);
+  for (int i = 0; list[i] != NULL; i++) {
+    fprintf(fp,"%s, ",list[i]);
+  }
+  fwrite("\n",1,1,fp);
+  fclose(fp);
+}
+
 int main(int argc, char const *argv[]) {
-  /*if (argc < 2) {
+  if (argc < 2) {
     printf("Usage: edit_distance_main <file_name>\n");
     exit(EXIT_FAILURE);
   }
@@ -75,26 +86,46 @@ int main(int argc, char const *argv[]) {
   printf("\nLoading data from file...\n");
   int correct_me_size = load_correct_me(argv[1], correct_me);
   int dictionary_size = load_dictionary("./dictionary.txt", dictionary);
-  printf("\nData loaded\n\n");*/
+  printf("\nData loaded\n\n");
+  int min, min_temp, list_index;
+  char *min_list[100];
   
-  /*for(int i = 0;i<correct_me_size; i++){
-    for(int j = 0;j<dictionary_size; j++){
-      edit_distance_dyn_ric(correct_me[i], dictionary[j]);
-    }
-  }*/
   clock_t start = clock();
-  int test1=edit_distance("universitacaonima","bracciodestro");
+  for(int i = 0; i < correct_me_size; i++){
+    min = 100;
+    list_index = 0;
+    for(int j = 0; j < dictionary_size; j++){
+      min_temp = edit_distance_dyn_ric(correct_me[i], dictionary[j]);
+      if(min == min_temp){
+        min_list[list_index++] = dictionary[j];
+      }
+      if(min>min_temp){
+        min=min_temp;
+        memset(min_list,0,sizeof(min_list));
+        list_index = 0;
+        min_list[list_index++] = dictionary[j];
+      }
+      
+      
+    }
+    insert_list(correct_me[i], min_list);
+  }
   double duration = (double)(clock()-start)/CLOCKS_PER_SEC;
+  printf("edit time: %lf\n",duration);
+  
+  /*start = clock();
+  int test1=edit_distance("universita","bracciodestro");
+  duration = (double)(clock()-start)/CLOCKS_PER_SEC;
   printf("1° time: %lf\n",duration);
   
   start = clock();
-  int test2=edit_distance_dyn_ric("universitacaonima","bracciodestro");
+  int test2=edit_distance_dyn_ric("universita","bracciodestro");
   duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("2° dynt: %lf\n",duration);
+  printf("2° dynt: %lf\n",duration);*/
   
-  //free_array(dictionary, dictionary_size);
-  //free_array(correct_me, correct_me_size);
-  printf("1: %d, 2: %d\n",test1, test2);
+  
+  free_array(dictionary, dictionary_size);
+  free_array(correct_me, correct_me_size);
   
 }
 
