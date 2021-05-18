@@ -98,6 +98,7 @@ int main(int argc, char const *argv[]) {
   int min, min_temp, list_index;
   char *min_list[100];
   
+  printf("Calculating...\n");
   clock_t start = clock();
   for(int i = 0; i < correct_me_size; i++){
     min = 100;
@@ -119,17 +120,30 @@ int main(int argc, char const *argv[]) {
     insert_list(correct_me[i], min_list);
   }
   double duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("edit time: %lf\n",duration);
-  
-  /*start = clock();
-  int test1=edit_distance("universita","bracciodestro");
-  duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("1° time: %lf\n",duration);
+  printf("edit dyn time: %lf\n",duration);
   
   start = clock();
-  int test2=edit_distance_dyn_ric("universita","bracciodestro");
+  for(int i = 0; i < correct_me_size; i++){
+    min = 100;
+    list_index = 0;
+    for(int j = 0; j < dictionary_size; j++){
+      min_temp = edit_distance(correct_me[i], dictionary[j]);
+      if(min == min_temp){
+        min_list[list_index++] = dictionary[j];
+      }
+      if(min>min_temp){
+        min=min_temp;
+        memset(min_list,0,sizeof(min_list));
+        list_index = 0;
+        min_list[list_index++] = dictionary[j];
+      }
+      
+      
+    }
+    insert_list(correct_me[i], min_list);
+  }
   duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("2° dynt: %lf\n",duration);*/
+  printf("edit time: %lf se.\n",duration);
   
   
   free_array(dictionary, dictionary_size);
