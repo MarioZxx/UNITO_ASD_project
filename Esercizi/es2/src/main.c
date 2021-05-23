@@ -85,7 +85,7 @@ static void insert_list(char *string, char **list) {  //creats output file in cs
   FILE *fp;
   fp = fopen("list_of_all_words.csv", "a");
   fprintf(fp,"%s : ",string);
-  for (int i = 0; list[i] != NULL; i++) {
+  for (int i = 0; list[i] != NULL && i < 6; i++) {
     fprintf(fp,"%s, ",list[i]);
   }
   fwrite("\n",1,1,fp);
@@ -109,9 +109,9 @@ int main(int argc, char const *argv[]) {
     }
   printf("\nLoading data from file...\n");
   int correct_me_size = load_correct_me(argv[1], correct_me);
-  int dictionary_size = load_dictionary("./dictionary.txt", dictionary);
+  int dictionary_size = load_dictionary(argv[2], dictionary);
   printf("\nData loaded\n\n");
-  int min, min_temp, list_index;
+  int min, min_temp, list_index, found;
   char *min_list[100];
   
   printf("Calculating...\n");
@@ -119,47 +119,57 @@ int main(int argc, char const *argv[]) {
   for(int i = 0; i < correct_me_size; i++){
     min = 100;
     list_index = 0;
+    found = 0;
     for(int j = 0; j < dictionary_size; j++){
+      if(strcasecmp(correct_me[i], dictionary[j]) == 0){
+        memset(min_list,0,sizeof(min_list));
+        found = 1;
+      }
+    }
+    for(int j = 0; j < dictionary_size && !found; j++){
       min_temp = edit_distance_dyn_ric(correct_me[i], dictionary[j]);
       if(min == min_temp){
         min_list[list_index++] = dictionary[j];
       }
       if(min>min_temp){
-        min=min_temp;
+        min = min_temp;
         memset(min_list,0,sizeof(min_list));
         list_index = 0;
         min_list[list_index++] = dictionary[j];
       }
-      
-      
     }
     insert_list(correct_me[i], min_list);
   }
   double duration = (double)(clock()-start)/CLOCKS_PER_SEC;
   printf("edit dyn time: %lf sec.\n",duration);
   
-  /*start = clock();
+  start = clock();
   for(int i = 0; i < correct_me_size; i++){
     min = 100;
     list_index = 0;
+    found = 0;
     for(int j = 0; j < dictionary_size; j++){
+      if(strcasecmp(correct_me[i], dictionary[j]) == 0){
+        memset(min_list,0,sizeof(min_list));
+        found = 1;
+      }
+    }
+    for(int j = 0; j < dictionary_size && !found; j++){
       min_temp = edit_distance(correct_me[i], dictionary[j]);
       if(min == min_temp){
         min_list[list_index++] = dictionary[j];
       }
       if(min>min_temp){
-        min=min_temp;
+        min = min_temp;
         memset(min_list,0,sizeof(min_list));
         list_index = 0;
         min_list[list_index++] = dictionary[j];
       }
-      
-      
     }
     insert_list(correct_me[i], min_list);
   }
   duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("edit time: %lf sec.\n",duration);*/
+  printf("edit time: %lf sec.\n",duration);
   
   
   free_array(dictionary, dictionary_size);

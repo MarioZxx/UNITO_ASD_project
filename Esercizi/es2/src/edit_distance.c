@@ -80,6 +80,9 @@ int edit_distance_dyn(char *string1, char *string2, mytable *dp_table){
 
 
 int edit_distance_dyn_ric(char *string1, char *string2){  //wrapper
+  if(strcasecmp(string1, string2) == 0){
+        return 0;
+  }
   mytable *dp_table = (mytable*)malloc(sizeof(mytable));
   if (dp_table == NULL) {
     fprintf(stderr,"edit_distance_dyn_ric: unable to allocate memory for dp_table");
