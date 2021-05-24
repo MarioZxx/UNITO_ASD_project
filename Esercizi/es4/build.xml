@@ -1,0 +1,49 @@
+<project name="KruskalGraph" basedir="." default="all">
+    <target name="init">
+        <property name="project.name" value="${ant.project.name}" />
+        <property location="classes" name="classes.dir" />
+        <property location="build" name="build.dir" />
+        <property location="src" name="src.dir" />
+        <property location="dist" name="dist.dir" />
+        <property location="lib/junit-4.12.jar" name="junit" />
+        <property location="lib/hamcrest-core-1.3.jar" name="hamcrest-core" />
+    </target>
+
+    <target depends="init" name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${classes.dir}"/>
+    </target>
+
+    <target depends="init" name="compile">
+        <mkdir dir="${classes.dir}" />
+        <javac destdir="${classes.dir}" srcdir="${src.dir}">
+            <classpath>
+                  <pathelement location="${junit}" />
+                  <pathelement location="${hamcrest-core}" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target depends="compile" name="jar">
+        <mkdir dir="build"/>
+        <jar destfile="build/Graph.jar" basedir="classes">
+          <manifest>
+            <attribute name="Main-Class" value="graph/Graph"/>
+          </manifest>
+        </jar>
+    </target>
+
+    <target depends="compile" name="junit">
+        <mkdir dir="build"/>
+        <jar destfile="build/GraphTests.jar" basedir="classes">
+          <zipgroupfileset dir="lib" includes="*.jar" excludes=""/>
+          <manifest>
+            <attribute name="Main-Class" value="graph/GraphTestsRunner"/>
+            <attribute name="Class-Path" value="${classpath}"/>
+          </manifest>
+        </jar>
+    </target>
+
+    <target depends="clean,init,compile,jar,junit" name="all" />
+
+</project>

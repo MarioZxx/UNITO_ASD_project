@@ -1,7 +1,7 @@
 package unionfindset;
 import java.util.*;
 
-// @param <Type>: type of the ordered array elements
+// @param <T>: type of the ordered array elements
 public class UnionFindSet<T> {
   private HashMap<T, T> set = new HashMap<T, T>();
   private HashMap<T, Integer> rank = new HashMap<T, Integer>();
@@ -28,7 +28,6 @@ public class UnionFindSet<T> {
         (this.rank).put(y, temp);
       }
     }
-    
   }
 
   public  T findSet(T x) { //non null, ma exception

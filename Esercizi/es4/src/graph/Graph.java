@@ -13,14 +13,14 @@ public class Graph<T> {
 
   public  void addNode(T x) {//O(1)
     if(nodeMap.containsKey(x))
-      return -1;
+      return;
     HashMap<T, T> arch = new HashMap<T, T>();
     (this.nodeMap).put(x, arch);
   }
   
   public  void addArch(T node1, T node2, T weight) {//O(1)
     if(!nodeMap.containsKey(node1) || !nodeMap.containsKey(node2))
-      return -1;
+      return;
     HashMap<T, T> arch = nodeMap.get(node1);
     arch.put(node2, weight);
     if(this.direct == 0){
@@ -33,15 +33,15 @@ public class Graph<T> {
     return this.direct;
   }
 
-  public  boolean contentNode(T x) {//O(1)
+  public  boolean containsNode(T x) {//O(1)
     if ((this.nodeMap).containsKey(x))
       return true;
     return false;
   }
   
-  public  boolean contentArch(T node1, T node2) {//O(1)
+  public  boolean containsArch(T node1, T node2) {//O(1)
     if(!nodeMap.containsKey(node1) || !nodeMap.containsKey(node2))
-      return -1;
+      return false;
     HashMap<T, T> arch = nodeMap.get(node1);
     if (arch.containsKey(node2))
       return true;
@@ -54,7 +54,7 @@ public class Graph<T> {
   
   public  void removeArch(T node1, T node2) {//O(1)
     if(!nodeMap.containsKey(node1) || !nodeMap.containsKey(node2))
-      return -1;
+      return;
     HashMap<T, T> arch = nodeMap.get(node1);
     arch.remove(node2);
     if(this.direct == 0){
@@ -68,10 +68,11 @@ public class Graph<T> {
   }
   
   public  int numberOfArch(){//O(n)
-    int result;
-    for(HashMap<T, T> arch : (this.nodeMap).value()){
+    int result = 0;
+    for(HashMap<T, T> arch : (this.nodeMap).values()){
       result = result + arch.size();
     }
+    return result;
   }
   
   public  ArrayList getNodes(){//O(n)
@@ -79,13 +80,13 @@ public class Graph<T> {
     for(T node : (this.nodeMap).keySet()){
       result.add(node);
     }
-    return result
+    return result;
   }
   
   public  ArrayList getArchs(){//O(n)
     ArrayList<T> result = new ArrayList<T>();
-    for(HashMap<T, T> arch : (this.nodeMap).value()){
-      for(T weight : arch.value()){
+    for(HashMap<T, T> arch : (this.nodeMap).values()){
+      for(T weight : arch.values()){
         result.add(weight);
       }
     }

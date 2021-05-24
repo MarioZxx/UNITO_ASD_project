@@ -6,7 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-//java -cp '.;../junit-4.12.jar;../hamcrest-core-1.3.jar'  unionfindset/UnionFindSetTestsRunner
 
 public class UnionFindSetTests {
 
