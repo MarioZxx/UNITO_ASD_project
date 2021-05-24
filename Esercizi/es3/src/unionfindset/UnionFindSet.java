@@ -7,8 +7,10 @@ public class UnionFindSet<T> {
   private HashMap<T, Integer> rank = new HashMap<T, Integer>();
 
   public  void makeSet(T x) {
-    (this.set).put(x, x);
-    (this.rank).put(x, 0);
+    if(!(this.set).containsKey(x)){
+      (this.set).put(x, x);
+      (this.rank).put(x, 0);
+    }
   }
 
   public  void union(T x, T y) {
@@ -16,6 +18,7 @@ public class UnionFindSet<T> {
   }
 
   public  void link(T x, T y) {
+    if(x == y) return;
     if ((this.rank).get(x) > (this.rank).get(y)){
       (this.set).put(y, x);
     } else {
@@ -28,8 +31,8 @@ public class UnionFindSet<T> {
     
   }
 
-  public  T findSet(T x) {
-    if (x != (this.set).get(x))
+  public  T findSet(T x) { //non null, ma exception
+    if (x != (this.set).get(x) && (this.set).containsKey(x))
       (this.set).put(x, findSet( (this.set).get(x) ));
     return (this.set).get(x);
   }

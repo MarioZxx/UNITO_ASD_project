@@ -68,6 +68,19 @@ public class UnionFindSetTests {
     strTest.union(s2, s3);
     assertTrue(strTest.findSet(s3) == s2);
   }
+  
+  @Test
+  public void testRepeatElem(){
+    intTest.union(i1, i2);
+    intTest.makeSet(i1);
+    assertFalse(intTest.findSet(i1) == i1);
+  }
+  
+  @Test
+  public void testNoExistElem(){
+    assertTrue(strTest.findSet("Doesn't exist") == null);
+  }
+
 
 
 }
