@@ -20,8 +20,8 @@ int min_number(int first, int secnd){
 }
 
 int edit_distance(char *string1, char *string2){  //edit_distance recursive
-  if(strlen(string1)==0) return strlen(string2);
-  if(strlen(string2)==0) return strlen(string1);
+  if(strlen(string1)==0) return (int)strlen(string2);
+  if(strlen(string2)==0) return (int)strlen(string1);
   if(string1[0]==string2[0] || string1[0]==string2[0]-32 || string1[0]==string2[0]+32) 
     return edit_distance(rest(string1), rest(string2));
   return 1 + min_number( edit_distance(string1, rest(string2)),
@@ -34,9 +34,9 @@ void insert(char *string1, char *string2, mytable *dp_table, int dp_distance){
   int index = dp_table->index_of_table;
   if (index >= dp_table->capacity) {
     dp_table->capacity = 2 * dp_table->capacity;
-    dp_table->str1 = (char**)realloc(dp_table->str1, dp_table->capacity * sizeof(char*));
-    dp_table->str2 = (char**)realloc(dp_table->str2, dp_table->capacity * sizeof(char*));
-    dp_table->distance = (int*)realloc(dp_table->distance, dp_table->capacity * sizeof(int));
+    dp_table->str1 = (char**)realloc(dp_table->str1, (long unsigned int)dp_table->capacity * sizeof(char*));
+    dp_table->str2 = (char**)realloc(dp_table->str2, (long unsigned int)dp_table->capacity * sizeof(char*));
+    dp_table->distance = (int*)realloc(dp_table->distance, (long unsigned int)dp_table->capacity * sizeof(int));
     if (dp_table->str1 == NULL || dp_table->str2 == NULL || dp_table->distance == NULL) {
       fprintf(stderr,"edit_dyn_insert: unable to reallocate memory to host the new element");
       exit(EXIT_FAILURE);
@@ -61,8 +61,8 @@ int check(char *string1, char *string2, mytable *dp_table){
 //edit_distance with dynamic programming, every time calculate a distance, will be insert in the table
 int edit_distance_dyn(char *string1, char *string2, mytable *dp_table){
   int dp_distance;
-  if(strlen(string1)==0) return strlen(string2);
-  if(strlen(string2)==0) return strlen(string1);
+  if(strlen(string1)==0) return (int)strlen(string2);
+  if(strlen(string2)==0) return (int)strlen(string1);
   dp_distance = check(string1,string2,dp_table);
   if(dp_distance!=-1) return dp_distance;
   

@@ -1,3 +1,4 @@
+CFLAGS 		= -g -O1 -Wall -Wextra -Wpedantic -Wconversion
 COMMON_DEPS 	= src/*.h makefile
 
 all: ./merge_binary ./merge_bin_tests
@@ -9,7 +10,7 @@ all: ./merge_binary ./merge_bin_tests
 	gcc -o ./merge_bin_tests src/merge_bin_tests.o src/merge_binary.o src/sorting_array.o src/unity.o
   
 src/%.o: src/%.c $(COMMON_DEPS)
-	gcc -c $< -o $@
+	gcc $(CFLAGS) -c $< -o $@
   
 tests: 
 	./merge_bin_tests

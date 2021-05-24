@@ -116,12 +116,15 @@ int main(int argc, char const *argv[]) {
   SortingArray *array = sorting_array_create(precedes_record);
   load_array(argv[1], array);
   printf("Insert the value of k\n");
-  scanf("%d",&k);
-  printf("Choose between field1 string, field2 int, field3 double [1/2/3]\n");//devo ancora applicare il controllo su inserimento
-  scanf("%hd",&field);getchar();
+  while(scanf("%d",&k) < 0)
+    printf("Please insert a value of k");
+  printf("Choose between field1 string, field2 int, field3 double [1/2/3]\n");
+  while(scanf("%hd",&field) < 0)
+    printf("Please choose a field");
+  getchar();
   
   printf("Do you want sort in ascending order?[y/n]\n");
-  res=getchar();getchar();
+  res=(char)getchar();getchar();
   if(res=='y') {
     ascend=1;
   }else{ 
@@ -135,11 +138,11 @@ int main(int argc, char const *argv[]) {
   printf("\nThe duration of the m_bi_sort is %f sec. \n",duration);
   
   printf("Do you want the output file?[y/n]\n");
-  res=getchar();getchar();
+  res=(char)getchar();getchar();
   if(res=='y')
     { get_array(array); }
   
-  free(array);
+  free_array(array);
   return EXIT_SUCCESS;
 }
 

@@ -43,7 +43,7 @@ void sorting_array_add(SortingArray *sorting_array, void *element, int index) {
 
   if (sorting_array->size >= sorting_array->array_capacity) {
     sorting_array->array_capacity = 2 * sorting_array->array_capacity;
-    sorting_array->array = (void**)realloc(sorting_array->array, sorting_array->array_capacity * sizeof(void*));
+    sorting_array->array = (void**)realloc(sorting_array->array, (long unsigned int)sorting_array->array_capacity * sizeof(void*));
     if (sorting_array->array == NULL) {
       fprintf(stderr,"sorting_array_add: unable to reallocate memory to host the new element");
       exit(EXIT_FAILURE);
@@ -75,6 +75,6 @@ unsigned long sorting_array_size(SortingArray *sorting_array) {
     fprintf(stderr, "sorting_array_size: sorting_array parameter cannot be NULL");
     exit(EXIT_FAILURE);
   }
-  return sorting_array->size;
+  return (unsigned long)sorting_array->size;
 }
 

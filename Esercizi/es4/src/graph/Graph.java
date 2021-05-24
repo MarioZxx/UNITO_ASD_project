@@ -48,7 +48,7 @@ public class Graph<T> {
     return false;
   }
   
-  public  void removeNode(T x) {//O(1) expected //O(n) because linkedlist
+  public  void removeNode(T x) {//O(1) expected O(n) because linkedlist
     (this.nodeMap).remove(x);
   }
   

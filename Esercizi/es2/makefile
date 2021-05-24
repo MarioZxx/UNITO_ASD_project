@@ -1,3 +1,4 @@
+CFLAGS 		= -g -O1 -Wall -Wextra -Wpedantic -Wconversion
 COMMON_DEPS 	= src/*.h makefile
 
 all: ./edit_distance ./edit_distance_tests
@@ -9,7 +10,7 @@ all: ./edit_distance ./edit_distance_tests
 	gcc -o ./edit_distance_tests src/edit_distance_tests.o src/edit_distance.o src/unity.o
 	 
 src/%.o: src/%.c $(COMMON_DEPS)
-	gcc -c $< -o $@
+	gcc $(CFLAGS) -c $< -o $@
   
 tests: 
 	./edit_distance_tests

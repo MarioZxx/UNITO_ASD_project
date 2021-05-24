@@ -4,7 +4,7 @@
 void merge(SortingArray *sorting_array, short field, short ascend, int start, int mid, int end){
   int i = start, j = mid+1, k = 0; //the three index
   void **temp;
-  temp=(void**)malloc(sizeof(void*)*(end-start+1));
+  temp=(void**)malloc(sizeof(void*)*(unsigned long)(end-start+1));
   
   while(i<=mid && j<=end){
     if(ascend==1){
