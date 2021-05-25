@@ -18,7 +18,7 @@ public class UnionFindSet<T> {
   }
 
   public  void link(T x, T y) {
-    if(x == y) return;
+    if(x.equals(y)) return;
     if ((this.rank).get(x) > (this.rank).get(y)){
       (this.set).put(y, x);
     } else {

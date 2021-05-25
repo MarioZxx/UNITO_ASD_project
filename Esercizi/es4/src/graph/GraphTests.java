@@ -9,155 +9,189 @@ import org.junit.Test;
 
 public class GraphTests {
 
-  private Integer i1,i2,i3,w1,w2,w3;
+  private Integer w1,w2,w3;
   private String s1,s2,s3;
-  private Graph<Integer> intDirectTest, intIndirectTest;
-  private Graph<String>  strTest;
-  private ArrayList<Integer> intNodes,intArchs;
+  private Graph<String, Integer> strDirectTest, strIndirectTest;
+  private ArrayList<String> strNodes;
+  private ArrayList<Arch<String, Integer>> arrayArchs;
+  private ArrayList<Arch<String, Integer>> resArchs;
+  private Arch<String, Integer> temp;
+  /*must be called by Arch*/
+  private boolean equalsArch (Arch first, Arch secnd){
+    if ((first.node1).equals(secnd.node1) && (first.node2).equals(secnd.node2) &&
+      (first.weight).equals(secnd.weight))
+      return true;
+    return false;
+  }
 
   @Before
   public void createGraph() throws GraphException{
-    i1 = 2;
-    i2 = 5;
-    i3 = 9;
+    s1 = "torino";
+    s2 = "milano";
+    s3 = "bologna";
     w1 = 102;
     w2 = 105;
     w3 = 109;
-    intDirectTest = new Graph<>(1);
-    intIndirectTest = new Graph<>(0);
-    intNodes = new ArrayList<>();
-    intArchs = new ArrayList<>();
+    strDirectTest = new Graph<>(1);
+    strIndirectTest = new Graph<>(0);
+    strNodes = new ArrayList<>();
+    
+    arrayArchs = new ArrayList<>();
+    resArchs = new ArrayList<>();
+    temp = new Arch<>();
   }
 
 
   @Test
   public void testIsEmpty(){
-    assertTrue(intDirectTest.numberOfNode() == 0);
+    assertTrue(strDirectTest.numberOfNode() == 0);
   }
   
   @Test
   public void testAddNode(){
-    intDirectTest.addNode(i1);
-    assertTrue(intDirectTest.numberOfNode() == 1);
+    strDirectTest.addNode(s1);
+    assertTrue(strDirectTest.numberOfNode() == 1);
   }
   
   @Test
   public void testAddArch_direct(){
-    intDirectTest.addNode(i1);
-    intDirectTest.addNode(i2);
-    intDirectTest.addArch(i1, i2, w1);
-    assertTrue(intDirectTest.numberOfArch() == 1);
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addArch(s1, s2, w1);
+    assertTrue(strDirectTest.numberOfArch() == 1);
   }  
   
   @Test
   public void testAddArch_indirect(){
-    intIndirectTest.addNode(i1);
-    intIndirectTest.addNode(i2);
-    intIndirectTest.addArch(i1, i2, 34);
-    assertTrue(intIndirectTest.numberOfArch() == 2);
+    strIndirectTest.addNode(s1);
+    strIndirectTest.addNode(s2);
+    strIndirectTest.addArch(s1, s2, 34);
+    assertTrue(strIndirectTest.numberOfArch() == 2);
   }
   
   @Test
   public void testContainsNode(){
-    intDirectTest.addNode(i3);
-    assertTrue(intDirectTest.containsNode(i3));
+    strDirectTest.addNode(s3);
+    assertTrue(strDirectTest.containsNode(s3));
   }
   
   @Test
   public void testContainsArch_direct(){
-    intDirectTest.addNode(i1);
-    intDirectTest.addNode(i2);
-    intDirectTest.addArch(i1, i2, w1);
-    assertTrue(intDirectTest.containsArch(i1, i2));
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addArch(s1, s2, w1);
+    assertTrue(strDirectTest.containsArch(s1, s2));
   }
   
   @Test
   public void testContainsArch_indirect(){
-    intIndirectTest.addNode(i1);
-    intIndirectTest.addNode(i2);
-    intIndirectTest.addArch(i1, i2, w1);
-    assertTrue(intIndirectTest.containsArch(i1, i2) && intIndirectTest.containsArch(i2, i1));
+    strIndirectTest.addNode(s1);
+    strIndirectTest.addNode(s2);
+    strIndirectTest.addArch(s1, s2, w1);
+    assertTrue(strIndirectTest.containsArch(s1, s2) && strIndirectTest.containsArch(s2, s1));
   }
   
   @Test
   public void testRemoveNode(){
-    intDirectTest.addNode(i1);
-    intDirectTest.removeNode(i1);
-    assertTrue(intDirectTest.numberOfNode() == 0);
+    strDirectTest.addNode(s1);
+    strDirectTest.removeNode(s1);
+    assertTrue(strDirectTest.numberOfNode() == 0);
   }
   
   @Test
   public void testRemoveArch_direct(){
-    intDirectTest.addNode(i1);
-    intDirectTest.addNode(i2);
-    intDirectTest.addArch(i1, i2, w1);
-    intDirectTest.removeArch(i1, i2);
-    assertTrue(intDirectTest.numberOfArch() == 0);
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addArch(s1, s2, w1);
+    strDirectTest.removeArch(s1, s2);
+    assertTrue(strDirectTest.numberOfArch() == 0);
   }
   
   @Test
   public void testRemoveArch_indirect(){
-    intIndirectTest.addNode(i1);
-    intIndirectTest.addNode(i2);
-    intIndirectTest.addArch(i1, i2, w1);
-    intIndirectTest.removeArch(i1, i2);
-    assertTrue(intIndirectTest.numberOfArch() == 0);
+    strIndirectTest.addNode(s1);
+    strIndirectTest.addNode(s2);
+    strIndirectTest.addArch(s1, s2, w1);
+    strIndirectTest.removeArch(s1, s2);
+    assertTrue(strIndirectTest.numberOfArch() == 0);
   }
   
   @Test
   public void testRecoveryNodes(){
-    intDirectTest.addNode(i1);
-    intDirectTest.addNode(i2);
-    intNodes.add(i1);
-    intNodes.add(i2);
-    assertTrue(intNodes.equals(intDirectTest.getNodes()));
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strNodes.add(s1);
+    strNodes.add(s2);
+    assertTrue(strNodes.equals(strDirectTest.getNodes()));
   }
   
   @Test
   public void testRecoveryArch_direct(){
-    intDirectTest.addNode(i1);
-    intDirectTest.addNode(i2);
-    intDirectTest.addArch(i1, i2, w1);
-    intArchs.add(w1);
-    assertTrue(intArchs.equals(intDirectTest.getArchs()));
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addArch(s1, s2, w1);
+    resArchs = strDirectTest.getArchs();
+    temp.node1 = s1;
+    temp.node2 = s2;
+    temp.weight = w1;
+    assertTrue(equalsArch(temp,resArchs.get(0)) );
   }
   
   @Test
   public void testRecoveryArch_indirect(){
-    intIndirectTest.addNode(i1);
-    intIndirectTest.addNode(i2);
-    intIndirectTest.addArch(i1, i2, w1);
-    intArchs.add(w1);
-    intArchs.add(w1);
-    assertTrue(intArchs.equals(intIndirectTest.getArchs()));
+    strIndirectTest.addNode(s1);
+    strIndirectTest.addNode(s2);
+    strIndirectTest.addNode(s3);
+    strIndirectTest.addArch(s1, s2, w1);
+    strIndirectTest.addArch(s2, s3, w3);
+    resArchs = strIndirectTest.getArchs();
+    temp.node1=s1;
+    temp.node2=s2;
+    temp.weight=w1;
+    arrayArchs.add(temp);
+    temp.node1=s2;
+    temp.node2=s1;
+    arrayArchs.add(temp);
+    temp.node1=s2;
+    temp.node2=s3;
+    temp.weight=w3;
+    arrayArchs.add(temp);
+    temp.node1=s3;
+    temp.node2=s2;
+    arrayArchs.add(temp);
+    for(int i=0; i<4; i++){
+      if(!equalsArch(arrayArchs.get(i),resArchs.get(i)))
+        assertTrue(false);
+    }
+    assertTrue(true);
   }
   
   @Test
   public void testRecoveryAdjNodes(){
-    intDirectTest.addNode(i1);
-    intDirectTest.addNode(i2);
-    intDirectTest.addNode(i3);
-    intDirectTest.addArch(i1, i2, w1);
-    intDirectTest.addArch(i1, i3, w2);
-    intNodes.add(i2);
-    intNodes.add(i3);
-    assertTrue(intNodes.equals(intDirectTest.getAdjacentNodes(i1)));
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addNode(s3);
+    strDirectTest.addArch(s1, s2, w1);
+    strDirectTest.addArch(s1, s3, w2);
+    strNodes.add(s2);
+    strNodes.add(s3);
+    assertTrue(strNodes.equals(strDirectTest.getAdjacentNodes(s1)));
   }
   
   @Test
   public void testGetWeight_direct(){
-    intDirectTest.addNode(i1);
-    intDirectTest.addNode(i2);
-    intDirectTest.addArch(i1, i2, w3);
-    assertTrue(intDirectTest.getWeight(i1, i2) == w3);
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addArch(s1, s2, w3);
+    assertTrue(strDirectTest.getWeight(s1, s2) == w3);
   }
   
   @Test
   public void testGetWeight_indirect(){
-    intIndirectTest.addNode(i1);
-    intIndirectTest.addNode(i2);
-    intIndirectTest.addArch(i1, i2, w3);
-    assertTrue(intIndirectTest.getWeight(i1, i2) == w3 && intIndirectTest.getWeight(i2, i1) == w3);
+    strIndirectTest.addNode(s1);
+    strIndirectTest.addNode(s2);
+    strIndirectTest.addArch(s1, s2, w3);
+    assertTrue(strIndirectTest.getWeight(s1, s2) == w3 && strIndirectTest.getWeight(s2, s1) == w3);
   }
 
 

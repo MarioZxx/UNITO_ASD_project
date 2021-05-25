@@ -24,7 +24,16 @@
         </javac>
     </target>
 
-    <target depends="compile" name="jar">
+    <target depends="compile" name="kruskaljar">
+        <mkdir dir="build"/>
+        <jar destfile="build/Kruskal.jar" basedir="classes">
+          <manifest>
+            <attribute name="Main-Class" value="kruskal/Kruskal"/>
+          </manifest>
+        </jar>
+    </target>
+    
+    <target depends="compile" name="graphjar">
         <mkdir dir="build"/>
         <jar destfile="build/Graph.jar" basedir="classes">
           <manifest>
@@ -33,7 +42,7 @@
         </jar>
     </target>
 
-    <target depends="compile" name="junit">
+    <target depends="compile" name="graphjunit">
         <mkdir dir="build"/>
         <jar destfile="build/GraphTests.jar" basedir="classes">
           <zipgroupfileset dir="lib" includes="*.jar" excludes=""/>
@@ -44,6 +53,6 @@
         </jar>
     </target>
 
-    <target depends="clean,init,compile,jar,junit" name="all" />
+    <target depends="clean,init,compile,graphjar,graphjunit,kruskaljar" name="all" />
 
 </project>
