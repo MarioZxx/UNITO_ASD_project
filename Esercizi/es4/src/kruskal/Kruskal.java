@@ -6,7 +6,7 @@ import unionfindset.*;
 public class Kruskal{
 
   
-  public static Graph kruskal(Graph<String, Float> inputGraph){
+  public static Graph kruskal(Graph<String, Float> inputGraph) throws KruskalException, Exception{
     UnionFindSet<String> uFSetGraph = new UnionFindSet<>();
     Graph<String, Float> resultGraph = new Graph<>(0);
     ArrayList<Arch<String, Float>> arrayArchs;//node1, node2, weight
@@ -50,7 +50,7 @@ public class Kruskal{
     System.out.println("end print");
   }
   
-  public static void main(String[] args) {
+  public static void main(String[] args) throws KruskalException,Exception{
     Graph<String, Float> testGraph = new Graph<>(0);
     Graph<String, Float> printGraph = new Graph<>(0);
     String s1,s2,s3,s4,s5,s6,s7;

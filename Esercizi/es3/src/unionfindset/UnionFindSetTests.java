@@ -33,53 +33,46 @@ public class UnionFindSetTests {
   }
 
   @Test
-  public void testFindInt(){
+  public void testFindInt() throws Exception{
     assertTrue(intTest.findSet(i1) == i1);
   }
   
   @Test
-  public void testUnionInt_oneAndOne(){
+  public void testUnionInt_oneAndOne() throws Exception{
     intTest.unionSet(i1, i2);
     assertTrue(intTest.findSet(i1) == i2);
   }
   
   @Test
-  public void testUnionInt_twoAndOne(){
+  public void testUnionInt_twoAndOne() throws Exception{
     intTest.unionSet(i1, i2);
     intTest.unionSet(i3, i2);
     assertTrue(intTest.findSet(i3) == i2);
   }
   
   @Test
-  public void testFindStr(){
+  public void testFindStr() throws Exception{
     assertTrue(strTest.findSet(s1) == s1);
   }
   
   @Test
-  public void testUnionStr_oneAndOne(){
+  public void testUnionStr_oneAndOne() throws Exception{
     strTest.unionSet(s1, s2);
     assertTrue(strTest.findSet(s1) == s2);
   }
   
   @Test
-  public void testUnionStr_twoAndOne(){
+  public void testUnionStr_twoAndOne() throws Exception{
     strTest.unionSet(s1, s2);
     strTest.unionSet(s2, s3);
     assertTrue(strTest.findSet(s3) == s2);
   }
   
   @Test
-  public void testRepeatElem(){
+  public void testRepeatElem() throws Exception{
     intTest.unionSet(i1, i2);
     intTest.makeSet(i1);
     assertFalse(intTest.findSet(i1) == i1);
   }
-  
-  @Test
-  public void testNoExistElem(){
-    assertTrue(strTest.findSet("Doesn't exist") == null);
-  }
-
-
 
 }

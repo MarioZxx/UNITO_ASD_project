@@ -11,16 +11,20 @@ public class Graph<T, W> {
     this.direct = ifdirect;
   }
 
-  public  void addNode(T x) {//O(1)
-    if(nodeMap.containsKey(x))
+  public  void addNode(T node) throws GraphException{//O(1)
+    if(node == null)
+      throw new GraphException("addNode: node parameter cannot be null");
+    if(nodeMap.containsKey(node))
       return;
     HashMap<T, W> arch = new HashMap<T, W>();
-    (this.nodeMap).put(x, arch);
+    (this.nodeMap).put(node, arch);
   }
   
-  public  void addArch(T node1, T node2, W weight) {//O(1)
+  public  void addArch(T node1, T node2, W weight) throws GraphException{//O(1)
     if(!nodeMap.containsKey(node1) || !nodeMap.containsKey(node2))
-      return;
+      throw new GraphException("addArch: node parameter doesn't exist");
+    if(weight == null)
+      throw new GraphException("addArch: weight parameter cannot be null");
     HashMap<T, W> arch = nodeMap.get(node1);
     arch.put(node2, weight);
     if(this.direct == 0){
@@ -33,8 +37,8 @@ public class Graph<T, W> {
     return this.direct;
   }
 
-  public  boolean containsNode(T x) {//O(1)
-    if ((this.nodeMap).containsKey(x))
+  public  boolean containsNode(T node) {//O(1)
+    if ((this.nodeMap).containsKey(node))
       return true;
     return false;
   }
@@ -48,8 +52,8 @@ public class Graph<T, W> {
     return false;
   }
   
-  public  void removeNode(T x) {//O(1) expected O(n) because linkedlist
-    (this.nodeMap).remove(x);
+  public  void removeNode(T node) {//O(1) expected O(n) because linkedlist
+    (this.nodeMap).remove(node);
   }
   
   public  void removeArch(T node1, T node2) {//O(1)
@@ -99,18 +103,25 @@ public class Graph<T, W> {
     return result;
   }
   
-  public  ArrayList getAdjacentNodes(T node){ //O(1)
+  public  ArrayList getAdjacentNodes(T node) throws GraphException{ //O(1)
+    if(node == null)
+      throw new GraphException("getAdjacentNodes: node parameter cannot be null");
     ArrayList<T> result = new ArrayList<>();
-    HashMap<T, W> arch = (this.nodeMap).get(node);
-    for(T nodeAd : arch.keySet()){
-      result.add(nodeAd);
+    if(containsNode(node)){
+      HashMap<T, W> arch = (this.nodeMap).get(node);
+      for(T nodeAd : arch.keySet()){
+        result.add(nodeAd);
+      }
     }
     return result;
   }
   
   public  W getWeight(T node1, T node2){  //O(1)
-    HashMap<T, W> arch = (this.nodeMap).get(node1);
-    return arch.get(node2);
+    if(containsArch(node1,node2)){
+      HashMap<T, W> arch = (this.nodeMap).get(node1);
+      return arch.get(node2);
+    }
+    return null;
   }
   
   

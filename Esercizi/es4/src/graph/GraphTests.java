@@ -48,13 +48,13 @@ public class GraphTests {
   }
   
   @Test
-  public void testAddNode(){
+  public void testAddNode() throws Exception{
     strDirectTest.addNode(s1);
     assertTrue(strDirectTest.numberOfNode() == 1);
   }
   
   @Test
-  public void testAddArch_direct(){
+  public void testAddArch_direct() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w1);
@@ -62,7 +62,7 @@ public class GraphTests {
   }  
   
   @Test
-  public void testAddArch_indirect(){
+  public void testAddArch_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
     strIndirectTest.addArch(s1, s2, 34);
@@ -70,13 +70,13 @@ public class GraphTests {
   }
   
   @Test
-  public void testContainsNode(){
+  public void testContainsNode() throws Exception{
     strDirectTest.addNode(s3);
     assertTrue(strDirectTest.containsNode(s3));
   }
   
   @Test
-  public void testContainsArch_direct(){
+  public void testContainsArch_direct() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w1);
@@ -84,7 +84,7 @@ public class GraphTests {
   }
   
   @Test
-  public void testContainsArch_indirect(){
+  public void testContainsArch_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
     strIndirectTest.addArch(s1, s2, w1);
@@ -92,23 +92,25 @@ public class GraphTests {
   }
   
   @Test
-  public void testRemoveNode(){
+  public void testRemoveNode() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.removeNode(s1);
+    strDirectTest.removeNode("Doesn't exist");
     assertTrue(strDirectTest.numberOfNode() == 0);
   }
-  
+
   @Test
-  public void testRemoveArch_direct(){
+  public void testRemoveArch_direct() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w1);
     strDirectTest.removeArch(s1, s2);
+    strDirectTest.removeArch("Doesn't exist", s2);
     assertTrue(strDirectTest.numberOfArch() == 0);
   }
   
   @Test
-  public void testRemoveArch_indirect(){
+  public void testRemoveArch_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
     strIndirectTest.addArch(s1, s2, w1);
@@ -117,7 +119,7 @@ public class GraphTests {
   }
   
   @Test
-  public void testRecoveryNodes(){
+  public void testRecoveryNodes() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strNodes.add(s1);
@@ -126,7 +128,7 @@ public class GraphTests {
   }
   
   @Test
-  public void testRecoveryArch_direct(){
+  public void testRecoveryArch_direct() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w1);
@@ -138,7 +140,7 @@ public class GraphTests {
   }
   
   @Test
-  public void testRecoveryArch_indirect(){
+  public void testRecoveryArch_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
     strIndirectTest.addNode(s3);
@@ -172,7 +174,7 @@ public class GraphTests {
   }
   
   @Test
-  public void testRecoveryAdjNodes(){
+  public void testRecoveryAdjNodes() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addNode(s3);
@@ -184,7 +186,18 @@ public class GraphTests {
   }
   
   @Test
-  public void testGetWeight_direct(){
+  public void testRecoveryAdjNodes_noAdj() throws Exception{
+    strDirectTest.addNode(s1);
+    assertTrue(strNodes.equals(strDirectTest.getAdjacentNodes(s1)));
+  }
+  
+  @Test
+  public void testRecoveryAdjNodes_noExist() throws Exception{
+    assertTrue(strNodes.equals(strDirectTest.getAdjacentNodes("Doesn't exist")));
+  }
+  
+  @Test
+  public void testGetWeight_direct() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w3);
@@ -192,11 +205,18 @@ public class GraphTests {
   }
   
   @Test
-  public void testGetWeight_indirect(){
+  public void testGetWeight_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
     strIndirectTest.addArch(s1, s2, w3);
     assertTrue(strIndirectTest.getWeight(s1, s2) == w3 && strIndirectTest.getWeight(s2, s1) == w3);
+  }
+  
+  @Test
+  public void testGetWeight_noExistArch() throws Exception{
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    assertTrue(strDirectTest.getWeight(s1, s2) == null);
   }
 
 

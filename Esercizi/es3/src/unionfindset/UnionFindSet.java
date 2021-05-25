@@ -13,7 +13,7 @@ public class UnionFindSet<T> {
     }
   }
 
-  public  void unionSet(T x, T y) {
+  public  void unionSet(T x, T y)  throws UnionFindSetException{
     this.link(this.findSet(x), this.findSet(y));
   }
 
@@ -30,8 +30,10 @@ public class UnionFindSet<T> {
     }
   }
 
-  public  T findSet(T x) { //non null, ma exception
-    if (x != (this.set).get(x) && (this.set).containsKey(x))
+  public  T findSet(T x) throws UnionFindSetException{ //non null, ma exception
+    if(!(this.set).containsKey(x))
+      throw new UnionFindSetException("findSet: node parameter doesn't made");
+    if (x != (this.set).get(x))
       (this.set).put(x, findSet( (this.set).get(x) ));
     return (this.set).get(x);
   }

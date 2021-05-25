@@ -41,7 +41,9 @@ public class MergeSort{
 		}
 	}
 
-	public void mergeSort(ArrayList<Arch<String, Float>> arrayArchs, int l, int r){
+	public void mergeSort(ArrayList<Arch<String, Float>> arrayArchs, int l, int r) throws KruskalException{
+	  if(arrayArchs == null)
+      throw new KruskalException("mergeSort: arrayArchs parameter cannot be null");
 		if (l < r) {
 			int m =l+ (r-l)/2;
 			mergeSort(arrayArchs, l, m);
