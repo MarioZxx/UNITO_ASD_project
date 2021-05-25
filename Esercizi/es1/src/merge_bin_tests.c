@@ -5,8 +5,7 @@
 
 //unity tests
 // precedence relation used in tests
-static int precedes_int(void *i1_p, void *i2_p, short unused) {
-  unused++;
+static int precedes_int(void *i1_p, void *i2_p) {
   int *int1_p = (int*)i1_p;
   int *int2_p = (int*)i2_p;
   return *int1_p < *int2_p;
@@ -46,7 +45,7 @@ static void test_sorting_array_size_two_el() {
   SortingArray *sorting_array_int = sorting_array_create(precedes_int);
   sorting_array_add(sorting_array_int, &i2, 0);
   sorting_array_add(sorting_array_int, &i1, 1);
-  m_bi_sort(sorting_array_int,0,0,1);
+  m_bi_sort(sorting_array_int,0,1);
   TEST_ASSERT_EQUAL_INT(2, sorting_array_size(sorting_array_int));
   sorting_array_free_memory(sorting_array_int);
 }
@@ -69,7 +68,7 @@ static void test_sorting_array_add_get_three_el() {
   sorting_array_add(sorting_array_int, &i2, 0);
   sorting_array_add(sorting_array_int, &i3, 1);
   sorting_array_add(sorting_array_int, &i1, 2);
-  m_bi_sort(sorting_array_int,0,0,1);
+  m_bi_sort(sorting_array_int,0,1);
 
   int **act_arr = malloc(3*sizeof(int*));
   for (int i=0; i < 3; ++i) {

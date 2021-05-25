@@ -2,7 +2,7 @@
 #define INITIAL_CAPACITY 2
 
 
-SortingArray *sorting_array_create(int (*precedes)(void*, void*, short)) {
+SortingArray *sorting_array_create(int (*precedes)(void*, void*)) {
   SortingArray *sorting_array = (SortingArray*)malloc(sizeof(SortingArray));
   if (sorting_array == NULL) {
     fprintf(stderr, "sorting_array_create: unable to allocate memory for the sorting array");

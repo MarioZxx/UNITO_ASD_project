@@ -1,4 +1,4 @@
-CFLAGS 		= -g -O1 -Wall -Wextra -Wpedantic -Wconversion
+CFLAGS 		= -g -Wall -Wextra -Wpedantic -Wconversion
 COMMON_DEPS 	= src/*.h makefile
 
 all: ./edit_distance ./edit_distance_tests

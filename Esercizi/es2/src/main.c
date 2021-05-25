@@ -46,7 +46,7 @@ static int load_correct_me(const char *file_name, char **array){  //load correct
 }
 
 static int load_dictionary(const char *file_name, char **array){  //load dictionary file
-  char buffer[BUFFER_SIZE];  
+  char buffer[BUFFER_SIZE*10];  
   FILE *fp;
   fp = fopen(file_name, "r");
   if (fp == NULL) {
@@ -143,7 +143,7 @@ int main(int argc, char const *argv[]) {
   double duration = (double)(clock()-start)/CLOCKS_PER_SEC;
   printf("edit dyn time: %lf sec.\n",duration);
   
-  start = clock();
+  /*start = clock();
   for(int i = 0; i < correct_me_size; i++){
     min = 100;
     list_index = 0;
@@ -169,7 +169,7 @@ int main(int argc, char const *argv[]) {
     insert_list(correct_me[i], min_list);
   }
   duration = (double)(clock()-start)/CLOCKS_PER_SEC;
-  printf("edit time: %lf sec.\n",duration);
+  printf("edit time: %lf sec.\n",duration);*/
   
   
   free_array(dictionary, dictionary_size);

@@ -7,11 +7,11 @@ typedef struct _SortingArray {
   void **array;
   int size;
   int array_capacity;
-  int (*precedes)(void*, void*, short);
+  int (*precedes)(void*, void*);
 }SortingArray;
 
-void m_bi_sort(SortingArray *sorting_array, int k, short field, short ascend);
-SortingArray *sorting_array_create(int (*precedes)(void*, void*, short));
+void m_bi_sort(SortingArray *sorting_array, int k, short ascend);
+SortingArray *sorting_array_create(int (*precedes)(void*, void*));
 int sorting_array_is_empty(SortingArray*);
 unsigned long sorting_array_size(SortingArray*);
 void sorting_array_add(SortingArray*, void*, int);

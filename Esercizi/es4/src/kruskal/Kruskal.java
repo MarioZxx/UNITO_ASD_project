@@ -6,12 +6,14 @@ import unionfindset.*;
 public class Kruskal{
 
   
-  public static Graph kruskal(Graph<String, Float> inputGraph) throws KruskalException, Exception{
+  public static Graph kruskal(Graph<String, Double> inputGraph) throws KruskalException, Exception{
+    if(inputGraph == null)
+      throw new KruskalException("kruskal: inputGraph parameter cannot be null");
     UnionFindSet<String> uFSetGraph = new UnionFindSet<>();
-    Graph<String, Float> resultGraph = new Graph<>(0);
-    ArrayList<Arch<String, Float>> arrayArchs;//node1, node2, weight
+    Graph<String, Double> resultGraph = new Graph<>(0);
+    ArrayList<Arch<String, Double>> arrayArchs;//node1, node2, weight
     ArrayList<String> arrayNode;
-    Arch<String, Float> minArch;
+    Arch<String, Double> minArch;
     
     arrayNode = inputGraph.getNodes();
     for(int i = 0; i < arrayNode.size(); i++){
@@ -40,8 +42,8 @@ public class Kruskal{
     return resultGraph;
   }
   
-  public static void printArrayList(ArrayList<Arch<String, Float>> arrayArchs){
-    Arch<String, Float> temp = new Arch<>();
+  /*public static void printArrayList(ArrayList<Arch<String, Double>> arrayArchs){
+    Arch<String, Double> temp = new Arch<>();
     System.out.println("start print");
     for(int i = 0; i < arrayArchs.size(); i++){
       temp = arrayArchs.get(i);
@@ -50,7 +52,7 @@ public class Kruskal{
     System.out.println("end print");
   }
   
-  public static void main(String[] args) throws KruskalException,Exception{
+  /*public static void main(String[] args) throws KruskalException,Exception{
     Graph<String, Float> testGraph = new Graph<>(0);
     Graph<String, Float> printGraph = new Graph<>(0);
     String s1,s2,s3,s4,s5,s6,s7;
@@ -75,8 +77,7 @@ public class Kruskal{
     printGraph = kruskal(testGraph);
     ArrayList<Arch<String, Float>> minimo = printGraph.getArchs();
     printArrayList(minimo);
-    
-  }
+  }*/
   
 
 }

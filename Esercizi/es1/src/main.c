@@ -8,7 +8,21 @@ typedef struct _record {
   double double_field;
 } Record;
 
-static int precedes_record(void *r1_p, void *r2_p, short field) {  //if i want sort int/double field = 2/3, for string field = 1
+static int precedes_record_string(void *r1_p, void *r2_p) {
+  if (r1_p == NULL) {
+    fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
+    exit(EXIT_FAILURE);
+  }
+  if (r2_p == NULL) {
+    fprintf(stderr, "precedes_record: the second parameter is a null pointer\n");
+    exit(EXIT_FAILURE);
+  }
+  Record *rec1_p = (Record*)r1_p;
+  Record *rec2_p = (Record*)r2_p;    
+  return strcmp(rec1_p->string_field, rec2_p->string_field) < 0;
+}
+
+static int precedes_record_integer(void *r1_p, void *r2_p) {
   if (r1_p == NULL) {
     fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
     exit(EXIT_FAILURE);
@@ -19,15 +33,21 @@ static int precedes_record(void *r1_p, void *r2_p, short field) {  //if i want s
   }
   Record *rec1_p = (Record*)r1_p;
   Record *rec2_p = (Record*)r2_p;
-  
-  switch(field){
-    case 0: return rec1_p->int_id < rec2_p->int_id;
-    case 1: return strcmp(rec1_p->string_field, rec2_p->string_field) < 0;
-    case 2: return rec1_p->integer_field < rec2_p->integer_field;
-    case 3: return rec1_p->double_field < rec2_p->double_field;
-    default:  fprintf(stderr, "precedes_record: the field type is wrong");
-              exit(EXIT_FAILURE);
+  return rec1_p->integer_field < rec2_p->integer_field;
+}
+
+static int precedes_record_double(void *r1_p, void *r2_p) {
+  if (r1_p == NULL) {
+    fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
+    exit(EXIT_FAILURE);
   }
+  if (r2_p == NULL) {
+    fprintf(stderr, "precedes_record: the second parameter is a null pointer\n");
+    exit(EXIT_FAILURE);
+  }
+  Record *rec1_p = (Record*)r1_p;
+  Record *rec2_p = (Record*)r2_p;
+  return rec1_p->double_field < rec2_p->double_field;
 }
 
 
@@ -68,7 +88,7 @@ static void load_array(const char *file_name, SortingArray *array) {
   }
     printf("array size: %d\n",array->size);
   fclose(fp);
-  printf("\nData loaded\n\n");
+  printf("Data loaded\n");
 }
 
 static void get_array(SortingArray *sorting_array) {  //creats output file in csv with array ordered
@@ -102,47 +122,53 @@ static void free_array(SortingArray *sorting_array) {
   free(sorting_array);
 }
 
+static void test_with_comparison_function(const char *file_name, int (*compare)(void*, void*),
+int k, short ascend, char *field) {
+  SortingArray *array = sorting_array_create(compare);
+  load_array(file_name, array);
+  
+  clock_t start = clock();
+  m_bi_sort(array, k, ascend);
+  double duration =  (double)(clock() - start)/CLOCKS_PER_SEC;  
+  printf("The duration of the %s field m_bi_sort is %f sec. \n", field, duration);
+  
+  printf("Do you want the output file?[y/n]\n");
+  char res=(char)getchar();getchar();
+  if(res=='y')
+    { get_array(array); }
+  
+  free_array(array);
+}
+
 int main(int argc, char const *argv[]) {
   if (argc < 2) {
     printf("Usage: sorting_array_main <file_name>\n");
     exit(EXIT_FAILURE);
   }
-  char res;
+  char *field;
   int k;
-  short field, ascend;
-  double duration;
-  clock_t start,stop;
+  short ascend=1;
   
-  SortingArray *array = sorting_array_create(precedes_record);
-  load_array(argv[1], array);
   printf("Insert the value of k\n");
   while(scanf("%d",&k) < 0)
     printf("Please insert a value of k");
-  printf("Choose between field1 string, field2 int, field3 double [1/2/3]\n");
-  while(scanf("%hd",&field) < 0)
-    printf("Please choose a field");
   getchar();
-  
   printf("Do you want sort in ascending order?[y/n]\n");
-  res=(char)getchar();getchar();
+  char res=(char)getchar();getchar();
   if(res=='y') {
     ascend=1;
   }else{ 
     ascend=0;}
-
+  
   printf("Sorting...\n");
-  start = clock();
-  m_bi_sort(array, k, field, ascend);
-  stop = clock();
-  duration =  (double)(stop-start)/CLOCKS_PER_SEC;  
-  printf("\nThe duration of the m_bi_sort is %f sec. \n",duration);
+  field = "string";
+  test_with_comparison_function(argv[1], precedes_record_string, k, ascend, field);
+  field = "integer";
+  test_with_comparison_function(argv[1], precedes_record_integer, k, ascend, field);
+  field = "double";
+  test_with_comparison_function(argv[1], precedes_record_double, k, ascend, field);
+  printf("\nFinished. \n");
   
-  printf("Do you want the output file?[y/n]\n");
-  res=(char)getchar();getchar();
-  if(res=='y')
-    { get_array(array); }
-  
-  free_array(array);
   return EXIT_SUCCESS;
 }
 

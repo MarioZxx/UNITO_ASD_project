@@ -69,6 +69,15 @@ public class UnionFindSetTests {
   }
   
   @Test
+  public void testUnionStr_repeatUnion() throws Exception{
+    strTest.unionSet(s1, s2);
+    strTest.unionSet(s1, s2);
+    strTest.unionSet(s1, s1);
+    strTest.unionSet(s2, s2);
+    assertTrue(strTest.findSet(s1) == s2);
+  }
+  
+  @Test
   public void testRepeatElem() throws Exception{
     intTest.unionSet(i1, i2);
     intTest.makeSet(i1);

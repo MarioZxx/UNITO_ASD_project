@@ -23,15 +23,6 @@
             </classpath>
         </javac>
     </target>
-
-    <target depends="compile" name="kruskaljar">
-        <mkdir dir="build"/>
-        <jar destfile="build/Kruskal.jar" basedir="classes">
-          <manifest>
-            <attribute name="Main-Class" value="kruskal/Kruskal"/>
-          </manifest>
-        </jar>
-    </target>
     
     <target depends="compile" name="graphjar">
         <mkdir dir="build"/>
@@ -51,8 +42,28 @@
             <attribute name="Class-Path" value="${classpath}"/>
           </manifest>
         </jar>
+    </target> 
+    
+    <target depends="compile" name="kruskaljar">
+        <mkdir dir="build"/>
+        <jar destfile="build/Kruskal.jar" basedir="classes">
+          <manifest>
+            <attribute name="Main-Class" value="kruskal/Kruskal"/>
+          </manifest>
+        </jar>
+    </target>
+    
+    <target depends="compile" name="mainkruskal">
+        <mkdir dir="build"/>
+        <jar destfile="build/MainKruskal.jar" basedir="classes">
+          <zipgroupfileset dir="lib" includes="*.jar" excludes=""/>
+          <manifest>
+            <attribute name="Main-Class" value="kruskal/MainKruskal"/>
+            <attribute name="Class-Path" value="${classpath}"/>
+          </manifest>
+        </jar>
     </target>
 
-    <target depends="clean,init,compile,graphjar,graphjunit,kruskaljar" name="all" />
+    <target depends="clean,init,compile,graphjar,graphjunit,kruskaljar,mainkruskal" name="all" />
 
 </project>

@@ -3,11 +3,11 @@ import java.util.*;
 import graph.*;
 
 public class MergeSort{
-	public void merge(ArrayList<Arch<String, Float>> arrayArchs, int l, int m, int r)	{
+	public void merge(ArrayList<Arch<String, Double>> arrayArchs, int l, int m, int r)	{
 		int n1 = m - l + 1;
 		int n2 = r - m;
-		ArrayList<Arch<String, Float>> left = new ArrayList<>();
-		ArrayList<Arch<String, Float>> right = new ArrayList<>();
+		ArrayList<Arch<String, Double>> left = new ArrayList<>();
+		ArrayList<Arch<String, Double>> right = new ArrayList<>();
 
 		for (int i = 0; i < n1; ++i)
 			left.add(arrayArchs.get(l+i));
@@ -41,7 +41,7 @@ public class MergeSort{
 		}
 	}
 
-	public void mergeSort(ArrayList<Arch<String, Float>> arrayArchs, int l, int r) throws KruskalException{
+	public void mergeSort(ArrayList<Arch<String, Double>> arrayArchs, int l, int r) throws KruskalException{
 	  if(arrayArchs == null)
       throw new KruskalException("mergeSort: arrayArchs parameter cannot be null");
 		if (l < r) {
