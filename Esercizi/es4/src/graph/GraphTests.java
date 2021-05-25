@@ -149,15 +149,20 @@ public class GraphTests {
     temp.node2=s2;
     temp.weight=w1;
     arrayArchs.add(temp);
+    temp=new Arch<>();
     temp.node1=s2;
     temp.node2=s1;
+    temp.weight=w1;
     arrayArchs.add(temp);
+    temp=new Arch<>();
     temp.node1=s2;
     temp.node2=s3;
     temp.weight=w3;
     arrayArchs.add(temp);
+    temp=new Arch<>();
     temp.node1=s3;
     temp.node2=s2;
+    temp.weight=w3;
     arrayArchs.add(temp);
     for(int i=0; i<4; i++){
       if(!equalsArch(arrayArchs.get(i),resArchs.get(i)))

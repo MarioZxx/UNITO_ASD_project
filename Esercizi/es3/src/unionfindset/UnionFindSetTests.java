@@ -39,14 +39,14 @@ public class UnionFindSetTests {
   
   @Test
   public void testUnionInt_oneAndOne(){
-    intTest.union(i1, i2);
+    intTest.unionSet(i1, i2);
     assertTrue(intTest.findSet(i1) == i2);
   }
   
   @Test
   public void testUnionInt_twoAndOne(){
-    intTest.union(i1, i2);
-    intTest.union(i3, i2);
+    intTest.unionSet(i1, i2);
+    intTest.unionSet(i3, i2);
     assertTrue(intTest.findSet(i3) == i2);
   }
   
@@ -57,20 +57,20 @@ public class UnionFindSetTests {
   
   @Test
   public void testUnionStr_oneAndOne(){
-    strTest.union(s1, s2);
+    strTest.unionSet(s1, s2);
     assertTrue(strTest.findSet(s1) == s2);
   }
   
   @Test
   public void testUnionStr_twoAndOne(){
-    strTest.union(s1, s2);
-    strTest.union(s2, s3);
+    strTest.unionSet(s1, s2);
+    strTest.unionSet(s2, s3);
     assertTrue(strTest.findSet(s3) == s2);
   }
   
   @Test
   public void testRepeatElem(){
-    intTest.union(i1, i2);
+    intTest.unionSet(i1, i2);
     intTest.makeSet(i1);
     assertFalse(intTest.findSet(i1) == i1);
   }
