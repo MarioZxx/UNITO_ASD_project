@@ -32,7 +32,7 @@ public class UnionFindSet<T> {
 
   public  T findSet(T x) throws UnionFindSetException{ //non null, ma exception
     if(!(this.set).containsKey(x))
-      throw new UnionFindSetException("findSet: node parameter doesn't made");
+      throw new UnionFindSetException("findSet: node parameter doesn't made/exist");
     if (x != (this.set).get(x))
       (this.set).put(x, findSet( (this.set).get(x) ));
     return (this.set).get(x);

@@ -2,7 +2,7 @@ package graph;
 import java.util.*;
 
 // @param <Type>: type of the ordered array elements
-public class Graph<T, W> {
+public class Graph<T, W extends Comparable<W>> {
   private HashMap<T, HashMap<T, W>> nodeMap;
   private int direct;
 

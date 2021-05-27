@@ -83,5 +83,6 @@ public class UnionFindSetTests {
     intTest.makeSet(i1);
     assertFalse(intTest.findSet(i1) == i1);
   }
+  
 
 }

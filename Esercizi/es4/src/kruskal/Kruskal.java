@@ -21,8 +21,9 @@ public class Kruskal{
       uFSetGraph.makeSet(setNode);
     }
     arrayArchs = inputGraph.getArchs();
-    MergeSort ms = new MergeSort();
-    ms.mergeSort(arrayArchs, 0, inputGraph.numberOfArch()-1);
+    Collections.sort(arrayArchs);
+    /*MergeSort ms = new MergeSort();
+    ms.mergeSort(arrayArchs, 0, inputGraph.numberOfArch()-1);*/
     //printArrayList(arrayArchs);
     
     for(int i = 0; i < arrayArchs.size(); i++){
