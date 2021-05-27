@@ -3,35 +3,30 @@ import java.util.*;
 import graph.*;
 import unionfindset.*;
 
-public class Kruskal{
-
+public class Kruskal<T, W extends Comparable<W>>{
   
-  public static Graph kruskal(Graph<String, Double> inputGraph) throws KruskalException, Exception{
+  public  Graph kruskal(Graph<T, W> inputGraph, int direct) 
+  throws KruskalException, Exception{
     if(inputGraph == null)
       throw new KruskalException("kruskal: inputGraph parameter cannot be null");
-    UnionFindSet<String> uFSetGraph = new UnionFindSet<>();
-    Graph<String, Double> resultGraph = new Graph<>(0);
-    ArrayList<Arch<String, Double>> arrayArchs;//node1, node2, weight
-    ArrayList<String> arrayNode;
-    Arch<String, Double> minArch;
+    UnionFindSet<T> uFSetGraph = new UnionFindSet<>();
+    Graph<T, W> resultGraph = new Graph<>(direct);
+    ArrayList<Arch<T, W>> arrayArchs;//node1, node2, weight
+    ArrayList<T> arrayNode;
+    Arch<T, W> minArch;
     
     arrayNode = inputGraph.getNodes();
     for(int i = 0; i < arrayNode.size(); i++){
-      String setNode = arrayNode.get(i);
+      T setNode = arrayNode.get(i);
       uFSetGraph.makeSet(setNode);
     }
     arrayArchs = inputGraph.getArchs();
     Collections.sort(arrayArchs);
-    /*MergeSort ms = new MergeSort();
-    ms.mergeSort(arrayArchs, 0, inputGraph.numberOfArch()-1);*/
-    //printArrayList(arrayArchs);
     
     for(int i = 0; i < arrayArchs.size(); i++){
       minArch = arrayArchs.get(i);
-    //System.out.println("for1: "+ minArch.node1 +" "+ minArch.node2 +" "+ minArch.weight);
-      String firstNode = uFSetGraph.findSet(minArch.node1);
-      String secndNode = uFSetGraph.findSet(minArch.node2);
-    //System.out.println("for2: "+firstNode +" "+ secndNode +" "+ minArch.weight);
+      T firstNode = uFSetGraph.findSet(minArch.node1);
+      T secndNode = uFSetGraph.findSet(minArch.node2);
       if(!firstNode.equals(secndNode)){
         resultGraph.addNode(minArch.node1);
         resultGraph.addNode(minArch.node2);
@@ -43,43 +38,15 @@ public class Kruskal{
     return resultGraph;
   }
   
-  /*public static void printArrayList(ArrayList<Arch<String, Double>> arrayArchs){
-    Arch<String, Double> temp = new Arch<>();
+  /*public void printArrayList(ArrayList<Arch<T, W>> arrayArchs){
+    Arch<T, W> temp = new Arch<>();
     System.out.println("start print");
     for(int i = 0; i < arrayArchs.size(); i++){
       temp = arrayArchs.get(i);
-      System.out.println(temp.node1 +" "+ temp.node2 +" "+ temp.weight);
+      System.out.println(temp.node1 +", "+ temp.node2 +", "+ temp.weight);
     }
     System.out.println("end print");
-  }
-  
-  /*public static void main(String[] args) throws KruskalException,Exception{
-    Graph<String, Float> testGraph = new Graph<>(0);
-    Graph<String, Float> printGraph = new Graph<>(0);
-    String s1,s2,s3,s4,s5,s6,s7;
-    Float w1,w2,w3,w4;
-    s1 = "torino";
-    s2 = "milano";
-    s3 = "bologna";
-    s4 = "genova";
-    s5 = "roma";
-    s6 = "napoli";
-    s7 = "udine";
-    w1 = 101f;
-    w2 = 202f;
-    w3 = 303f;
-    w4 = 151f;
-    testGraph.addNode(s1);testGraph.addNode(s2);testGraph.addNode(s3);testGraph.addNode(s4);
-    testGraph.addArch(s1,s2,w1);testGraph.addArch(s2,s3,w2);testGraph.addArch(s3,s1,w4);
-    testGraph.addArch(s4,s2,w2);testGraph.addArch(s3,s4,w3);
-    testGraph.addNode(s5);testGraph.addNode(s6);testGraph.addNode(s7);
-    testGraph.addArch(s5,s6,w1);testGraph.addArch(s5,s7,w3);testGraph.addArch(s6,s7,w4);
-    
-    printGraph = kruskal(testGraph);
-    ArrayList<Arch<String, Float>> minimo = printGraph.getArchs();
-    printArrayList(minimo);
-  }*/
-  
+  }*/ 
 
 }
 

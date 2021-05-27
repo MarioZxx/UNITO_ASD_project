@@ -36,11 +36,11 @@ public class MainKruskal {
     Graph<String, Double> inputGraph = new Graph<>(0);
     Graph<String, Double> KruskalMSTGraph;
     ArrayList<Arch<String, Double>> MSTArrayList;
-    Kruskal kruskal = new Kruskal();
+    Kruskal<String, Double> kruskal = new Kruskal<>();
     Double totalWeight = 0d;
     
     loadArray(args[0], inputGraph);
-    KruskalMSTGraph = kruskal.kruskal(inputGraph);
+    KruskalMSTGraph = kruskal.kruskal(inputGraph, 0);
     MSTArrayList = KruskalMSTGraph.getArchs();
     for(int i = 0; i < MSTArrayList.size(); i++)
       totalWeight = totalWeight + MSTArrayList.get(i).weight;
