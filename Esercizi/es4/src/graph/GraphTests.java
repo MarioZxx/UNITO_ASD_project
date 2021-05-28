@@ -18,8 +18,8 @@ public class GraphTests {
   private Arch<String, Integer> temp;
   /*must be called by Arch*/
   private boolean equalsArch (Arch first, Arch secnd){
-    if ((first.node1).equals(secnd.node1) && (first.node2).equals(secnd.node2) &&
-      (first.weight).equals(secnd.weight))
+    if ((first.getNode1()).equals(secnd.getNode1()) && (first.getNode2()).equals(secnd.getNode2()) &&
+      (first.getWeight()).equals(secnd.getWeight()))
       return true;
     return false;
   }
@@ -76,11 +76,21 @@ public class GraphTests {
   }
   
   @Test
-  public void testContainsArch_direct() throws Exception{
+  public void testContainsArch_directTrue() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w1);
-    assertTrue(strDirectTest.containsArch(s1, s2));
+    assertTrue(strDirectTest.containsArch(s1, s2, w1));
+  }
+  
+  @Test
+  public void testContainsArch_directFalse() throws Exception{
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addNode(s3);
+    strDirectTest.addArch(s1, s2, w1);
+    strDirectTest.addArch(s1, s3, w2);
+    assertFalse(strDirectTest.containsArch(s1, s3, w1));
   }
   
   @Test
@@ -88,7 +98,7 @@ public class GraphTests {
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
     strIndirectTest.addArch(s1, s2, w1);
-    assertTrue(strIndirectTest.containsArch(s1, s2) && strIndirectTest.containsArch(s2, s1));
+    assertTrue(strIndirectTest.containsArch(s1, s2, w1) && strIndirectTest.containsArch(s2, s1, w1));
   }
   
   @Test
@@ -133,9 +143,9 @@ public class GraphTests {
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w1);
     resArchs = strDirectTest.getArchs();
-    temp.node1 = s1;
-    temp.node2 = s2;
-    temp.weight = w1;
+    temp.setNode1(s1);
+    temp.setNode2(s2);
+    temp.setWeight(w1);
     assertTrue(equalsArch(temp,resArchs.get(0)) );
   }
   
@@ -147,24 +157,24 @@ public class GraphTests {
     strIndirectTest.addArch(s1, s2, w1);
     strIndirectTest.addArch(s2, s3, w3);
     resArchs = strIndirectTest.getArchs();
-    temp.node1=s1;
-    temp.node2=s2;
-    temp.weight=w1;
+    temp.setNode1(s1);
+    temp.setNode2(s2);
+    temp.setWeight(w1);
     arrayArchs.add(temp);
     temp=new Arch<>();
-    temp.node1=s2;
-    temp.node2=s1;
-    temp.weight=w1;
+    temp.setNode1(s2);
+    temp.setNode2(s1);
+    temp.setWeight(w1);
     arrayArchs.add(temp);
     temp=new Arch<>();
-    temp.node1=s2;
-    temp.node2=s3;
-    temp.weight=w3;
+    temp.setNode1(s2);
+    temp.setNode2(s3);
+    temp.setWeight(w3);
     arrayArchs.add(temp);
     temp=new Arch<>();
-    temp.node1=s3;
-    temp.node2=s2;
-    temp.weight=w3;
+    temp.setNode1(s3);
+    temp.setNode2(s2);
+    temp.setWeight(w3);
     arrayArchs.add(temp);
     for(int i=0; i<4; i++){
       if(!equalsArch(arrayArchs.get(i),resArchs.get(i)))
@@ -197,26 +207,26 @@ public class GraphTests {
   }
   
   @Test
-  public void testGetWeight_direct() throws Exception{
+  public void testgetWeightOfTwoNodes_direct() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     strDirectTest.addArch(s1, s2, w3);
-    assertTrue(strDirectTest.getWeight(s1, s2) == w3);
+    assertTrue(strDirectTest.getWeightOfTwoNodes(s1, s2) == w3);
   }
   
   @Test
-  public void testGetWeight_indirect() throws Exception{
+  public void testgetWeightOfTwoNodes_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
     strIndirectTest.addArch(s1, s2, w3);
-    assertTrue(strIndirectTest.getWeight(s1, s2) == w3 && strIndirectTest.getWeight(s2, s1) == w3);
+    assertTrue(strIndirectTest.getWeightOfTwoNodes(s1, s2) == w3 && strIndirectTest.getWeightOfTwoNodes(s2, s1) == w3);
   }
   
   @Test
-  public void testGetWeight_noExistArch() throws Exception{
+  public void testgetWeightOfTwoNodes_noExistArch() throws Exception{
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
-    assertTrue(strDirectTest.getWeight(s1, s2) == null);
+    assertTrue(strDirectTest.getWeightOfTwoNodes(s1, s2) == null);
   }
 
 

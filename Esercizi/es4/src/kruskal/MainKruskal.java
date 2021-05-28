@@ -43,8 +43,9 @@ public class MainKruskal {
     KruskalMSTGraph = kruskal.kruskal(inputGraph, 0);
     MSTArrayList = KruskalMSTGraph.getArchs();
     for(int i = 0; i < MSTArrayList.size(); i++)
-      totalWeight = totalWeight + MSTArrayList.get(i).weight;
-    System.out.println("N° nodes: " + KruskalMSTGraph.numberOfNode() + ", N° archs: " + KruskalMSTGraph.numberOfArch()/2 + ", total weight: " + totalWeight/2000 + " kilometre.");
+      totalWeight = totalWeight + MSTArrayList.get(i).getWeight();
+    System.out.println("N° nodes: " + KruskalMSTGraph.numberOfNode() + ", N° archs: " +
+    KruskalMSTGraph.numberOfArch()/2 + ", total weight: " + totalWeight/2000 + " kilometre.");
   }
   
 }

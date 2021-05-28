@@ -17,20 +17,20 @@ public class Kruskal<T, W extends Comparable<W>>{
     
     arrayNode = inputGraph.getNodes();
     for(int i = 0; i < arrayNode.size(); i++){
-      T setNode = arrayNode.get(i);
-      uFSetGraph.makeSet(setNode);
+      T setOfNode = arrayNode.get(i);
+      uFSetGraph.makeSet(setOfNode);
     }
     arrayArchs = inputGraph.getArchs();
     Collections.sort(arrayArchs);
     
     for(int i = 0; i < arrayArchs.size(); i++){
       minArch = arrayArchs.get(i);
-      T firstNode = uFSetGraph.findSet(minArch.node1);
-      T secndNode = uFSetGraph.findSet(minArch.node2);
+      T firstNode = uFSetGraph.findSet(minArch.getNode1());
+      T secndNode = uFSetGraph.findSet(minArch.getNode2());
       if(!firstNode.equals(secndNode)){
-        resultGraph.addNode(minArch.node1);
-        resultGraph.addNode(minArch.node2);
-        resultGraph.addArch(minArch.node1, minArch.node2, minArch.weight);
+        resultGraph.addNode(minArch.getNode1());
+        resultGraph.addNode(minArch.getNode2());
+        resultGraph.addArch(minArch.getNode1(), minArch.getNode2(), minArch.getWeight());
         uFSetGraph.unionSet(firstNode, secndNode);
       }
     }

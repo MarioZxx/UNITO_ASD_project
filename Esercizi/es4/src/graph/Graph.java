@@ -43,20 +43,20 @@ public class Graph<T, W extends Comparable<W>> {
     return false;
   }
   
-  public  boolean containsArch(T node1, T node2) {//O(1)
+  public  boolean containsArch(T node1, T node2, W weight) {//O(1)*
     if(!nodeMap.containsKey(node1) || !nodeMap.containsKey(node2))
       return false;
     HashMap<T, W> arch = nodeMap.get(node1);
-    if (arch.containsKey(node2))
+    if (arch.containsKey(node2) && arch.get(node2)==weight)
       return true;
     return false;
   }
   
-  public  void removeNode(T node) {//O(1) expected O(n) because linkedlist
+  public  void removeNode(T node) {//O(1), expected O(n) because linkedlist
     (this.nodeMap).remove(node);
   }
   
-  public  void removeArch(T node1, T node2) {//O(1)
+  public  void removeArch(T node1, T node2) {//O(1)*
     if(!nodeMap.containsKey(node1) || !nodeMap.containsKey(node2))
       return;
     HashMap<T, W> arch = nodeMap.get(node1);
@@ -88,22 +88,22 @@ public class Graph<T, W extends Comparable<W>> {
   }
   
   //return ArrayList with node1, node2, weight
-  public  ArrayList getArchs(){//O(n)
+  public  ArrayList getArchs(){ //O(n)
     ArrayList<Arch<T, W>> result = new ArrayList<>();
     for(T nodeOne : (this.nodeMap).keySet()){
       HashMap<T, W> arch = (this.nodeMap).get(nodeOne);
       for(T nodeTwo : arch.keySet()){
         Arch<T, W> temp = new Arch<>();
-        temp.node1 = nodeOne;
-        temp.node2 = nodeTwo;
-        temp.weight = arch.get(nodeTwo);
+        temp.setNode1(nodeOne);
+        temp.setNode2(nodeTwo);
+        temp.setWeight(arch.get(nodeTwo));
         result.add(temp);
       }
     }
     return result;
   }
   
-  public  ArrayList getAdjacentNodes(T node) throws GraphException{ //O(1)
+  public  ArrayList getAdjacentNodes(T node) throws GraphException{ //O(1)*
     if(node == null)
       throw new GraphException("getAdjacentNodes: node parameter cannot be null");
     ArrayList<T> result = new ArrayList<>();
@@ -116,11 +116,12 @@ public class Graph<T, W extends Comparable<W>> {
     return result;
   }
   
-  public  W getWeight(T node1, T node2){  //O(1)
-    if(containsArch(node1,node2)){
-      HashMap<T, W> arch = (this.nodeMap).get(node1);
+  public  W getWeightOfTwoNodes(T node1, T node2){  //O(1)*
+    if(!nodeMap.containsKey(node1) || !nodeMap.containsKey(node2))
+      return null;
+    HashMap<T, W> arch = (this.nodeMap).get(node1);
+    if(arch.containsKey(node2))
       return arch.get(node2);
-    }
     return null;
   }
   
