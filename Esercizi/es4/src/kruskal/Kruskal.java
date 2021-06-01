@@ -34,20 +34,9 @@ public class Kruskal<T, W extends Comparable<W>>{
         uFSetGraph.unionSet(firstNode, secndNode);
       }
     }
-    //printArrayList(resultGraph.getArchs());
     return resultGraph;
   }
   
-  /*public void printArrayList(ArrayList<Arch<T, W>> arrayArchs){
-    Arch<T, W> temp = new Arch<>();
-    System.out.println("start print");
-    for(int i = 0; i < arrayArchs.size(); i++){
-      temp = arrayArchs.get(i);
-      System.out.println(temp.node1 +", "+ temp.node2 +", "+ temp.weight);
-    }
-    System.out.println("end print");
-  }*/ 
-
 }
 
 

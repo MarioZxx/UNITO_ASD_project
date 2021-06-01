@@ -27,7 +27,7 @@ public class MainKruskal {
         inputGraph.addArch(lineElements[0], lineElements[1], Double.parseDouble(lineElements[2]));
       }
     } 
-    System.out.println("\nData loaded\n");
+    System.out.println("Data loaded\n");
   }
   
   public static void main(String[] args) throws IOException, KruskalException, Exception{
@@ -45,7 +45,7 @@ public class MainKruskal {
     for(int i = 0; i < MSTArrayList.size(); i++)
       totalWeight = totalWeight + MSTArrayList.get(i).getWeight();
     System.out.println("N° nodes: " + KruskalMSTGraph.numberOfNode() + ", N° archs: " +
-    KruskalMSTGraph.numberOfArch()/2 + ", total weight: " + totalWeight/2000 + " kilometre.");
+    KruskalMSTGraph.numberOfArch() + ", total weight: " + totalWeight/2000 + " kilometre.");
   }
   
 }

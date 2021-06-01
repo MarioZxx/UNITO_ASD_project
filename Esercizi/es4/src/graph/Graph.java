@@ -76,10 +76,10 @@ public class Graph<T, W extends Comparable<W>> {
     for(HashMap<T, W> arch : (this.nodeMap).values()){
       result = result + arch.size();
     }
-    return result;
+    return direct == 1 ? result : result/2;
   }
   
-  public  ArrayList getNodes(){//O(n)
+  public  ArrayList getNodes(){   //O(n)
     ArrayList<T> result = new ArrayList<>();
     for(T node : (this.nodeMap).keySet()){
       result.add(node);
