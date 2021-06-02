@@ -10,7 +10,7 @@ import org.junit.Test;
 public class GraphTests {
 
   private Integer w1,w2,w3;
-  private String s1,s2,s3;
+  private String s1,s2,s3,s4;
   private Graph<String, Integer> strDirectTest, strIndirectTest;
   private ArrayList<String> strNodes;
   private ArrayList<Arch<String, Integer>> arrayArchs;
@@ -29,6 +29,7 @@ public class GraphTests {
     s1 = "torino";
     s2 = "milano";
     s3 = "bologna";
+    s4 = "genova";
     w1 = 102;
     w2 = 105;
     w3 = 109;
@@ -65,8 +66,8 @@ public class GraphTests {
   public void testAddArch_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
-    strIndirectTest.addArch(s1, s2, 34);
-    assertTrue(strIndirectTest.numberOfArch() == 2);
+    strIndirectTest.addArch(s1, s2, 345);
+    assertTrue(strIndirectTest.numberOfArch() == 1);
   }
   
   @Test
@@ -227,6 +228,31 @@ public class GraphTests {
     strDirectTest.addNode(s1);
     strDirectTest.addNode(s2);
     assertTrue(strDirectTest.getWeightOfTwoNodes(s1, s2) == null);
+  }
+  
+  @Test
+  public void testForestDisconnected_direct() throws Exception{
+    strDirectTest.addNode(s1);
+    strDirectTest.addNode(s2);
+    strDirectTest.addNode(s3);
+    strDirectTest.addNode(s4);
+    strDirectTest.addArch(s1, s2, w1);
+    strDirectTest.addArch(s3, s4, w2);
+    resArchs = strDirectTest.getArchs();
+    temp.setNode1(s1);
+    temp.setNode2(s2);
+    temp.setWeight(w1);
+    arrayArchs.add(temp);
+    temp=new Arch<>();
+    temp.setNode1(s3);
+    temp.setNode2(s4);
+    temp.setWeight(w2);
+    arrayArchs.add(temp);
+    for(int i=0; i<2; i++){
+      if(!equalsArch(arrayArchs.get(i),resArchs.get(i)))
+        assertTrue(false);
+    }
+    assertTrue(true);
   }
 
 
