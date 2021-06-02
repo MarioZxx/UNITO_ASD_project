@@ -1,5 +1,7 @@
 package graph;
 import java.util.*;
+
+//class of arch to keep information of nodes and weight
 public class Arch<T, W extends Comparable<W>> implements Comparable<Arch<T, W>>{  
     private T node1, node2;
     private W weight;

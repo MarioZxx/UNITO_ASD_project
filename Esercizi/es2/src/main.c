@@ -2,8 +2,8 @@
 #define BUFFER_SIZE 1024
 #define CORRECT_CAPACITY 1024
 
-
-static int load_correct_me(const char *file_name, char **array){  //load correct_me file
+//load correct_me file
+static int load_correct_me(const char *file_name, char **array){  
   char buffer[BUFFER_SIZE];  
   FILE *fp;
   fp = fopen(file_name, "r");
@@ -45,7 +45,8 @@ static int load_correct_me(const char *file_name, char **array){  //load correct
   return index_of_array;
 }
 
-static int load_dictionary(const char *file_name, char **array){  //load dictionary file
+//load dictionary file
+static int load_dictionary(const char *file_name, char **array){
   char buffer[BUFFER_SIZE*10];  
   FILE *fp;
   fp = fopen(file_name, "r");
@@ -81,7 +82,8 @@ static void free_array(char **array, int size) {
   free(array);
 }
 
-static void insert_list(char *string, char **list) {  //creats output file in csv with array ordered
+//print the edit distance into a file
+static void insert_list(char *string, char **list) {
   FILE *fp;
   fp = fopen("list_of_all_words.csv", "a");
   fprintf(fp,"%s : ",string);
@@ -92,6 +94,7 @@ static void insert_list(char *string, char **list) {  //creats output file in cs
   fclose(fp);
 }
 
+//It should be invoked with one parameter specifying the filepath of the data file
 int main(int argc, char const *argv[]) {
   if (argc < 2) {
     printf("Usage: edit_distance_main <file_name>\n");

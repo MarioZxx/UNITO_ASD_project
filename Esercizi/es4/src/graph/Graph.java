@@ -87,7 +87,7 @@ public class Graph<T, W extends Comparable<W>> {
     return result;
   }
   
-  //return ArrayList with node1, node2, weight
+  //return an ArrayList with node1, node2, weight
   public  ArrayList getArchs(){ //O(n)
     ArrayList<Arch<T, W>> result = new ArrayList<>();
     for(T nodeOne : (this.nodeMap).keySet()){

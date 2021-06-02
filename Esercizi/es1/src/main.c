@@ -1,6 +1,7 @@
 #include "merge_binary.h"
 #define BUFFER_SIZE 1024
 
+/*struct for memory the input line*/
 typedef struct _record {
   int int_id;
   char *string_field;
@@ -8,6 +9,11 @@ typedef struct _record {
   double double_field;
 } Record;
 
+/*
+ * It takes as input two pointers to Record.
+ * It returns 1 iff the string field of the first record is smaller than
+ * the string field of the second one (0 otherwise)
+*/
 static int precedes_record_string(void *r1_p, void *r2_p) {
   if (r1_p == NULL) {
     fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
@@ -22,6 +28,11 @@ static int precedes_record_string(void *r1_p, void *r2_p) {
   return strcmp(rec1_p->string_field, rec2_p->string_field) < 0;
 }
 
+/*
+ * It takes as input two pointers to Record.
+ * It returns 1 iff the integer field of the first record is smaller than
+ * the integer field of the second one (0 otherwise)
+*/
 static int precedes_record_integer(void *r1_p, void *r2_p) {
   if (r1_p == NULL) {
     fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
@@ -36,6 +47,11 @@ static int precedes_record_integer(void *r1_p, void *r2_p) {
   return rec1_p->integer_field < rec2_p->integer_field;
 }
 
+/*
+ * It takes as input two pointers to Record.
+ * It returns 1 iff the double field of the first record is smaller than
+ * the double field of the second one (0 otherwise)
+*/
 static int precedes_record_double(void *r1_p, void *r2_p) {
   if (r1_p == NULL) {
     fprintf(stderr, "precedes_record: the first parameter is a null pointer\n");
@@ -50,7 +66,9 @@ static int precedes_record_double(void *r1_p, void *r2_p) {
   return rec1_p->double_field < rec2_p->double_field;
 }
 
-
+/*
+ * It takes as input the file to load and the array to keep the data.
+*/
 static void load_array(const char *file_name, SortingArray *array) {
   char buffer[BUFFER_SIZE];
   FILE *fp;
@@ -86,11 +104,15 @@ static void load_array(const char *file_name, SortingArray *array) {
     sorting_array_add(array, (void*)record_p, index_of_array);
     index_of_array++;
   }
-    printf("array size: %d\n",array->size);
+  printf("array size: %d\n",array->size);
   fclose(fp);
   printf("Data loaded\n");
 }
 
+/*
+ * It takes as input the sorted array.
+ * It give a output file with the sorted array.
+*/
 static void get_array(SortingArray *sorting_array) {  //creats output file in csv with array ordered
   int size = sorting_array->size;
   FILE *fp;
@@ -111,6 +133,10 @@ static void get_array(SortingArray *sorting_array) {  //creats output file in cs
   printf("Output with success.\n");
 }
 
+/*
+ * It takes as input the array finished to use.
+ * It free the input array.
+*/
 static void free_array(SortingArray *sorting_array) {
   int size = sorting_array->size;
   for (int i = 0; i < size; ++i) {
@@ -122,6 +148,10 @@ static void free_array(SortingArray *sorting_array) {
   free(sorting_array);
 }
 
+/*
+ * It takes as input the file to input and, compare function, value k, choice of ascendant, field chosen.
+ * It sorts the file with Merge-BinaryInsertion function.
+*/
 static void test_with_comparison_function(const char *file_name, int (*compare)(void*, void*),
 int k, short ascend, char *field) {
   SortingArray *array = sorting_array_create(compare);
@@ -140,6 +170,7 @@ int k, short ascend, char *field) {
   free_array(array);
 }
 
+//It should be invoked with one parameter specifying the filepath of the data file
 int main(int argc, char const *argv[]) {
   if (argc < 2) {
     printf("Usage: sorting_array_main <file_name>\n");

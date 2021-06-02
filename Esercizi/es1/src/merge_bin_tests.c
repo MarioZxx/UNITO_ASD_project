@@ -4,7 +4,7 @@
 #include "merge_binary.h"
 
 //unity tests
-// precedence relation used in tests
+//precedence relation used in tests
 static int precedes_int(void *i1_p, void *i2_p) {
   int *int1_p = (int*)i1_p;
   int *int2_p = (int*)i2_p;

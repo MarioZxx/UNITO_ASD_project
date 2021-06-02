@@ -1,7 +1,8 @@
 #include "edit_distance.h"
 #define INITIAL_CAPACITY 2
 
-typedef struct _mytable{  //struct for memoization
+//struct for memoization
+typedef struct _mytable{
   char **str1;
   char **str2;
   int *distance;
@@ -9,7 +10,8 @@ typedef struct _mytable{  //struct for memoization
   int capacity;
 }mytable;
 
-char *rest(char *string){ //return string without first char
+//return string without first char
+char *rest(char *string){ 
   string=string+1;
   return string;
 }
@@ -19,7 +21,8 @@ int min_number(int first, int secnd){
   else return secnd;
 }
 
-int edit_distance(char *string1, char *string2){  //edit_distance recursive
+//edit_distance recursive version
+int edit_distance(char *string1, char *string2){
   if(strlen(string1)==0) return (int)strlen(string2);
   if(strlen(string2)==0) return (int)strlen(string1);
   if(string1[0]==string2[0] || string1[0]==string2[0]-32 || string1[0]==string2[0]+32) 
@@ -53,7 +56,7 @@ int check(char *string1, char *string2, mytable *dp_table){
     for(int i = 0; i < dp_table->index_of_table; i++){
       if(strcasecmp(dp_table->str1[i], string1)==0 && strcasecmp(dp_table->str2[i], string2)==0){
         return dp_table->distance[i];
-        }
+      }
     }
   return -1;
 }
@@ -78,8 +81,8 @@ int edit_distance_dyn(char *string1, char *string2, mytable *dp_table){
   return dp_distance;
 }
 
-
-int edit_distance_dyn_ric(char *string1, char *string2){  //wrapper
+//wrapper, it needs two input string
+int edit_distance_dyn_ric(char *string1, char *string2){
   if(strcasecmp(string1, string2) == 0){
         return 0;
   }
@@ -94,7 +97,7 @@ int edit_distance_dyn_ric(char *string1, char *string2){  //wrapper
   if (dp_table->str1 == NULL || dp_table->str2 == NULL || dp_table->distance == NULL) {
       fprintf(stderr,"edit_distance_dyn_ric: unable to allocate memory for internal arrays");
       exit(EXIT_FAILURE);
-    }
+  }
   dp_table->index_of_table = 0;
   dp_table->capacity = INITIAL_CAPACITY;
   int result = edit_distance_dyn(string1, string2, dp_table);

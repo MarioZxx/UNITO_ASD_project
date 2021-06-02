@@ -3,6 +3,7 @@ import java.util.*;
 import graph.*;
 import unionfindset.*;
 
+//MST kruskal
 public class Kruskal<T, W extends Comparable<W>>{
   
   public  Graph kruskal(Graph<T, W> inputGraph, int direct) 

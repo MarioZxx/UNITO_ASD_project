@@ -1,7 +1,7 @@
 package unionfindset;
 import java.util.*;
 
-// @param <T>: type of the ordered array elements
+// @param <T>: type of the UnionFindSet nodes
 public class UnionFindSet<T> {
   private HashMap<T, T> set = new HashMap<T, T>();
   private HashMap<T, Integer> rank = new HashMap<T, Integer>();
@@ -30,9 +30,9 @@ public class UnionFindSet<T> {
     }
   }
 
-  public  T findSet(T x) throws UnionFindSetException{ //non null, ma exception
+  public  T findSet(T x) throws UnionFindSetException{
     if(!(this.set).containsKey(x))
-      throw new UnionFindSetException("findSet: node parameter doesn't made");
+      throw new UnionFindSetException("findSet: node parameter doesn't made/exist");
     if (x != (this.set).get(x))
       (this.set).put(x, findSet( (this.set).get(x) ));
     return (this.set).get(x);

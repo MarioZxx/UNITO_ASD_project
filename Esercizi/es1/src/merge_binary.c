@@ -1,6 +1,6 @@
 #include "merge_binary.h"
 
-/*if ascend = 1 so sort in ascend*/
+
 void merge(SortingArray *sorting_array, short ascend, int start, int mid, int end){
   int i = start, j = mid+1, k = 0; //the three index
   void **temp;
@@ -81,8 +81,10 @@ void merge_sort(SortingArray *sorting_array, int k, short ascend, int start, int
   }
 }
 
-
-void m_bi_sort(SortingArray *sorting_array, int k, short ascend) { //wrapper
+/*wrapper
+ *if ascend = 1 then sort in ascending, else sort in decreasing
+*/
+void m_bi_sort(SortingArray *sorting_array, int k, short ascend) {
 if (sorting_array == NULL) {
     fprintf(stderr, "Sorting_array_is_empty: Sorting_array parameter cannot be NULL");
     exit(EXIT_FAILURE);
