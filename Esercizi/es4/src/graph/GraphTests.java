@@ -66,7 +66,15 @@ public class GraphTests {
   public void testAddArch_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
+<<<<<<< HEAD
+<<<<<<< HEAD
+    strIndirectTest.addArch(s1, s2, 34);
+=======
     strIndirectTest.addArch(s1, s2, 345);
+>>>>>>> a9e4b26978d2819a141b2c0a14fb2e0546d5240f
+=======
+    strIndirectTest.addArch(s1, s2, 345);
+>>>>>>> a9e4b26978d2819a141b2c0a14fb2e0546d5240f
     assertTrue(strIndirectTest.numberOfArch() == 1);
   }
   
@@ -164,24 +172,14 @@ public class GraphTests {
     arrayArchs.add(temp);
     temp=new Arch<>();
     temp.setNode1(s2);
-    temp.setNode2(s1);
-    temp.setWeight(w1);
-    arrayArchs.add(temp);
-    temp=new Arch<>();
-    temp.setNode1(s2);
     temp.setNode2(s3);
     temp.setWeight(w3);
     arrayArchs.add(temp);
-    temp=new Arch<>();
-    temp.setNode1(s3);
-    temp.setNode2(s2);
-    temp.setWeight(w3);
-    arrayArchs.add(temp);
-    for(int i=0; i<4; i++){
+    for(int i=0; i<2; i++){
       if(!equalsArch(arrayArchs.get(i),resArchs.get(i)))
         assertTrue(false);
     }
-    assertTrue(true);
+    assertTrue(resArchs.size() == 2);
   }
   
   @Test

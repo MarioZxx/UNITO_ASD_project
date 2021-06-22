@@ -89,7 +89,9 @@ public class Graph<T, W extends Comparable<W>> {
   
   //return an ArrayList with node1, node2, weight
   public  ArrayList getArchs(){ //O(n)
-    ArrayList<Arch<T, W>> result = new ArrayList<>();
+    HashMap<Integer, Arch<T, W>> result = new HashMap<>();
+    HashMap<T, Integer> check = new HashMap<>();
+    int i = 0;
     for(T nodeOne : (this.nodeMap).keySet()){
       HashMap<T, W> arch = (this.nodeMap).get(nodeOne);
       for(T nodeTwo : arch.keySet()){
@@ -97,10 +99,20 @@ public class Graph<T, W extends Comparable<W>> {
         temp.setNode1(nodeOne);
         temp.setNode2(nodeTwo);
         temp.setWeight(arch.get(nodeTwo));
-        result.add(temp);
+        
+        if(direct == 0){
+        if(!check.containsKey(nodeTwo)){
+          result.put(i, temp);
+          check.put(nodeOne, i);
+          i++;
+          }
+        }else{
+          result.put(i, temp);
+          i++;
+        }
       }
     }
-    return result;
+    return new ArrayList<>(result.values());
   }
   
   public  ArrayList getAdjacentNodes(T node) throws GraphException{ //O(1)*

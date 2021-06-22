@@ -45,7 +45,7 @@ public class MainKruskal {
     for(int i = 0; i < MSTArrayList.size(); i++)
       totalWeight = totalWeight + MSTArrayList.get(i).getWeight();
     System.out.println("N° nodes: " + KruskalMSTGraph.numberOfNode() + ", N° archs: " +
-    KruskalMSTGraph.numberOfArch() + ", total weight: " + totalWeight/2000 + " kilometre.");
+    KruskalMSTGraph.numberOfArch() + ", total weight: " + totalWeight/1000 + " kilometre.");
   }
   
 }
