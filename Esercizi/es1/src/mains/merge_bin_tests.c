@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "unity.h"
-#include "merge_binary.h"
+#include "../unity/unity.h"
+#include "../mergebinary/merge_binary.h"
 
 //unity tests
 //precedence relation used in tests

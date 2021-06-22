@@ -1,4 +1,4 @@
-#include "merge_binary.h"
+#include "../mergebinary/merge_binary.h"
 #define BUFFER_SIZE 1024
 
 /*struct for memory the input line*/

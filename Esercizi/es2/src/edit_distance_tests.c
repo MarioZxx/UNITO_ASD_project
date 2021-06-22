@@ -1,4 +1,4 @@
-#include "unity.h"
+#include "unity/unity.h"
 #include "edit_distance.h"
 
 //unity tests

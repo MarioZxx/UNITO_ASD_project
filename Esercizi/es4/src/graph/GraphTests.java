@@ -66,15 +66,8 @@ public class GraphTests {
   public void testAddArch_indirect() throws Exception{
     strIndirectTest.addNode(s1);
     strIndirectTest.addNode(s2);
-<<<<<<< HEAD
-<<<<<<< HEAD
     strIndirectTest.addArch(s1, s2, 34);
-=======
-    strIndirectTest.addArch(s1, s2, 345);
->>>>>>> a9e4b26978d2819a141b2c0a14fb2e0546d5240f
-=======
-    strIndirectTest.addArch(s1, s2, 345);
->>>>>>> a9e4b26978d2819a141b2c0a14fb2e0546d5240f
+    strIndirectTest.addArch(s2, s1, 45);
     assertTrue(strIndirectTest.numberOfArch() == 1);
   }
   

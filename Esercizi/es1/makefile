@@ -1,20 +1,39 @@
 CFLAGS 		= -g -O1 -Wall -Wextra -Wpedantic -Wconversion
-COMMON_DEPS 	= src/*.h makefile
+COMMON_DEPS 	= src/mergebinary/*.h src/unity/*.h makefile
 
-all: ./merge_binary ./merge_bin_tests
+all: mkdir bin/merge_binary bin/merge_bin_tests
 
-./merge_binary: src/main.o src/merge_binary.o src/sorting_array.o $(COMMON_DEPS)
-	gcc -o ./client src/main.o src/merge_binary.o src/sorting_array.o
+mkdir:
+	mkdir build
+	mkdir bin
+
+bin/merge_binary: build/main.o build/merge_binary.o build/sorting_array.o $(COMMON_DEPS)
+	gcc -o bin/client build/main.o build/merge_binary.o build/sorting_array.o
 	
-./merge_bin_tests: src/merge_bin_tests.o src/merge_binary.o src/sorting_array.o src/unity.o $(COMMON_DEPS)
-	gcc -o ./merge_bin_tests src/merge_bin_tests.o src/merge_binary.o src/sorting_array.o src/unity.o
+bin/merge_bin_tests: build/merge_bin_tests.o build/merge_binary.o build/sorting_array.o build/unity.o $(COMMON_DEPS)
+	gcc -o bin/merge_bin_tests build/merge_bin_tests.o build/merge_binary.o build/sorting_array.o build/unity.o
   
-src/%.o: src/%.c $(COMMON_DEPS)
+build/main.o: src/mains/main.c $(COMMON_DEPS)
+	gcc $(CFLAGS) -c $< -o $@
+	
+build/merge_binary.o: src/mergebinary/merge_binary.c $(COMMON_DEPS)
+	gcc $(CFLAGS) -c $< -o $@
+	
+build/sorting_array.o: src/mergebinary/sorting_array.c $(COMMON_DEPS)
+	gcc $(CFLAGS) -c $< -o $@
+	
+build/merge_bin_tests.o: src/mains/merge_bin_tests.c $(COMMON_DEPS)
+	gcc $(CFLAGS) -c $< -o $@
+	
+build/unity.o: src/unity/unity.c $(COMMON_DEPS)
 	gcc $(CFLAGS) -c $< -o $@
   
 tests: 
-	./merge_bin_tests
+	bin/merge_bin_tests
   
 clean:
-	$(RM) src/*.o
+	$(RM) build/*
+	$(RM) bin/*
+	rmdir build
+	rmdir bin
 	
