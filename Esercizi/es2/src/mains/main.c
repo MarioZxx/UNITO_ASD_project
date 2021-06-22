@@ -1,4 +1,4 @@
-#include "edit_distance.h"
+#include "../editdistance/edit_distance.h"
 #define BUFFER_SIZE 1024
 #define CORRECT_CAPACITY 1024
 #define INITIAL_CAPACITY 2048

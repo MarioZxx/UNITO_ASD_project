@@ -6,4 +6,4 @@
 
 ---PER ESEGUIRE client di edit_distance---
 1) posizionarsi in .../es1
-2) ./client "./records.csv"
+2) bin/client "./records.csv"

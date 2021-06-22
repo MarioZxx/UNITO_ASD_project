@@ -1,5 +1,5 @@
-#include "unity.h"
-#include "edit_distance.h"
+#include "../unity/unity.h"
+#include "../editdistance/edit_distance.h"
 
 //unity tests
 static void test_edit_distance_with_empty_strings() {
