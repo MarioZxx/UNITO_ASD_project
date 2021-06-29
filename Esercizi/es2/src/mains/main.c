@@ -70,7 +70,7 @@ static int load_correct_me(const char *file_name, char **array){
 
 //load dictionary file
 static DictionaryArray *load_dictionary(const char *file_name, DictionaryArray *dictionary){
-  char buffer[BUFFER_SIZE*10];
+  char buffer[BUFFER_SIZE];
   FILE *fp;
   fp = fopen(file_name, "r");
   if (fp == NULL) {

@@ -1,10 +1,10 @@
 #include "edit_distance.h"
 
 //struct for memoization
-typedef struct _mytable{
+typedef struct _MyTable{
   int *distanceArray;
   int rowLength;
-}mytable;
+}MyTable;
 
 //return string without first char
 char *rest(char *string){ 
@@ -29,19 +29,19 @@ int edit_distance(char *string1, char *string2){
 }
 
 //insert a couple of string in the table, using string as an index
-void insert(char *string1, char *string2, mytable *dp_table, int dp_distance){
+void insert(char *string1, char *string2, MyTable *dp_table, int dp_distance){
   dp_table->distanceArray[(int)strlen(string1) * dp_table->rowLength + (int)strlen(string2)] = dp_distance;
 }
 
 //check if a couple of string exists in the table, if yes return their edit_distance
-int check(char *string1, char *string2, mytable *dp_table){
+int check(char *string1, char *string2, MyTable *dp_table){
   if(dp_table->distanceArray[(int)strlen(string1) * dp_table->rowLength + (int)strlen(string2)] != -1)
     return dp_table->distanceArray[(int)strlen(string1) * dp_table->rowLength + (int)strlen(string2)];
   return -1;
 }
 
-//edit_distance with dynamic programming, every time calculate a distance, will be insert in the table
-int edit_distance_dyn(char *string1, char *string2, mytable *dp_table){
+//edit_distance with dynamic programming, every time calculated a distance, will be inserted in the table
+int edit_distance_dyn(char *string1, char *string2, MyTable *dp_table){
   int dp_distance;
   if(strlen(string1)==0) return (int)strlen(string2);
   if(strlen(string2)==0) return (int)strlen(string1);
@@ -65,7 +65,7 @@ int edit_distance_dyn_ric(char *string1, char *string2){
   if(strcasecmp(string1, string2) == 0){
         return 0;
   }
-  mytable *dp_table = (mytable*)malloc(sizeof(mytable));
+  MyTable *dp_table = (MyTable*)malloc(sizeof(MyTable));
   if (dp_table == NULL) {
     fprintf(stderr,"edit_distance_dyn_ric: unable to allocate memory for dp_table");
     exit(EXIT_FAILURE);

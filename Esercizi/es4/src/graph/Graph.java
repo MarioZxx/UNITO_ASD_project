@@ -101,10 +101,10 @@ public class Graph<T, W extends Comparable<W>> {
         temp.setWeight(arch.get(nodeTwo));
         
         if(direct == 0){
-        if(!check.containsKey(nodeTwo)){
-          result.put(i, temp);
-          check.put(nodeOne, i);
-          i++;
+          if(!check.containsKey(nodeTwo)){
+            result.put(i, temp);
+            check.put(nodeOne, i);
+            i++;
           }
         }else{
           result.put(i, temp);
